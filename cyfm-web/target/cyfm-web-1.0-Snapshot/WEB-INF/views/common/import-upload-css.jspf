@@ -1,0 +1,19 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<link rel="stylesheet" href="${ctx}/static/plugins/upload/css/style.css">
+<link rel="stylesheet" href="${ctx}/static/plugins/upload/css/jquery.fileupload-ui.css">
+
+<style type="text/css">
+    pre {padding-top:20px;}
+    div#imgjgbox{
+        background:url("${ctx}/static/ding_styles/${map.css_address}/images/imgjg.jpg") left 3px no-repeat;
+        padding-left:20px;
+        font-size:12px;
+        color:#f00;
+        margin-bottom:10px;
+    }
+
+    div.filelist {
+        overflow: auto;
+        height: 280px;
+    }
+</style>

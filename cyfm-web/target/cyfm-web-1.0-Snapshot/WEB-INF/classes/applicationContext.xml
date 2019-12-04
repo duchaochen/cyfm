@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+       default-lazy-init="true">
+
+    <description>Spring公共配置</description>
+
+
+    <!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
+    <context:component-scan base-package="com.ppcxy">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <bean id="dataSourceProxy" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+        <property name="targetDataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- Jpa Entity Manager 配置 -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSourceProxy"/>
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
+
+        <property name="packagesToScan" value="com.ppcxy.cyfm"/>
+        <property name="jpaPropertyMap">
+            <map>
+                <!-- 使用自定义的validator进行jsr303验证 -->
+                <entry key="javax.persistence.validation.factory" value-ref="validator"/>
+                <!-- jsr303验证模式 因为其要么验证 要么不验证 不能按照规则走 所以此处禁用 -->
+                <!-- #http://docs.jboss.org/hibernate/entitymanager/3.6/reference/en/html/configuration.html -->
+                <entry key="javax.persistence.validation.mode" value="NONE"></entry>
+            </map>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.query.substitutions">${hibernate.query.substitutions}</prop>
+                <prop key="hibernate.default_batch_fetch_size">${hibernate.default_batch_fetch_size}</prop>
+                <prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">${hibernate.bytecode.use_reflection_optimizer}</prop>
+                <prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
+                <prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
+                <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
+                <prop key="hibernate.ejb.naming_strategy">${hibernate.ejb.naming_strategy}</prop>
+                <prop key="net.sf.ehcache.configurationResourceName">${net.sf.ehcache.configurationResourceName}</prop>
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+                <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+                <prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop>
+                <prop key="hibernate.enable_lazy_load_no_tran">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="databasePlatform">
+            <bean factory-method="getDialect" class="org.springside.modules.persistence.Hibernates">
+                <constructor-arg ref="dataSourceProxy"/>
+            </bean>
+        </property>
+        <property name="generateDdl" value="false"/>
+        <property name="showSql" value="true"/>
+    </bean>
+
+    <!--
+        spring data jpa repository
+        base-package:扫描的包
+        repository-impl-postfix:仓库自定义实现类型的后缀  自动扫描并添加到接口的实现
+        factory-class 仓库接口的实现工厂
+
+    -->
+    <!-- Spring Data Jpa配置, 扫描base-package下所有继承于Repository<T,ID>的接口 -->
+    <jpa:repositories base-package="com.ppcxy.cyfm.**.repository.jpa" repository-impl-postfix="Impl"
+                      factory-class="com.ppcxy.common.repository.jpa.support.SimpleBaseRepositoryFactoryBean"
+                      entity-manager-factory-ref="entityManagerFactory"
+                      transaction-manager-ref="transactionManager">
+
+    </jpa:repositories>
+
+    <!-- MyBatis配置 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.CustomSqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceProxy"/>
+        <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+        <property name="typeAliasesPackage" value="com.ppcxy.cyfm.**.entity"/>
+        <!-- 显式指定Mapper文件位置 -->
+        <property name="mapperLocations" value="classpath*:/mybatis/**/*Mapper.xml"/>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                            offsetAsPageNum=true
+                            rowBoundsWithCount=true
+                            reasonable=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+    <!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.ppcxy.cyfm"/>
+        <property name="annotationClass" value="com.ppcxy.common.repository.mybatis.MyBatisRepository"/>
+    </bean>
+
+    <!-- 事务管理器配置, Jpa单数据源事务 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        <property name="dataSource" ref="dataSourceProxy"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" order="1"/>
+
+    <!-- 定义aspectj -->
+    <!-- 开启AOP监听 只对当前配置文件有效 -->
+    <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
+
+    <!-- aop 配置方式的事物管理,针对被aop的注解无法生效的service使用配置方式-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="doReweight" propagation="REQUIRES_NEW"/>
+            <tx:method name="doClear*" propagation="REQUIRES_NEW"/>
+            <tx:method name="doSend*" propagation="REQUIRES_NEW"/>
+            <tx:method name="doBatchSave*" propagation="REQUIRES_NEW"/>
+
+            <!--hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到-->
+            <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="count*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="list*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config expose-proxy="true" proxy-target-class="true">
+        <!-- 只对业务逻辑层实施事务 -->
+        <aop:pointcut id="txPointcut"
+                      expression="execution(* com.ppcxy..service.resource.ResourceService.*(..)) or execution(* com.ppcxy..service.user.UserService.*(..))"/>
+        <aop:advisor id="txAdvisor" advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
+
+    <!-- custom -->
+    <bean class="com.ppcxy.common.spring.SpringContextHolder" lazy-init="false"></bean>
+
+    <!-- hibernate validator -->
+    <!-- 以下 validator  ConversionService 在使用 mvc:annotation-driven 会 自动注册-->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+        <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+    <!-- 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <!-- 在web环境中一定要定位到classpath 否则默认到当前web应用下找  -->
+                <value>classpath:/messages/messages</value>
+                <value>classpath:/messages/ValidationMessages</value>
+            </list>
+        </property>
+        <property name="useCodeAsDefaultMessage" value="false"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="cacheSeconds" value="60"/>
+    </bean>
+
+
+    <!-- 类型转换及数据格式化 -->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean"
+          lazy-init="false"/>
+    <!-- 直接把id转换为entity 必须非lazy否则无法注册-->
+    <bean id="domainClassConverter" class="org.springframework.data.repository.support.DomainClassConverter"
+          lazy-init="false">
+        <constructor-arg ref="conversionService"/>
+    </bean>
+
+    <bean id="webBindingInitializer" class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+        <property name="conversionService" ref="conversionService"/>
+        <property name="validator" ref="validator"/>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="webBindingInitializer" ref="webBindingInitializer"/>
+    </bean>
+
+    <!--设置查询字符串转换器的conversion service-->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false">
+        <property name="staticMethod"
+                  value="com.ppcxy.common.entity.search.utils.SearchableConvertUtils.setConversionService"/>
+        <property name="arguments" ref="conversionService"/>
+    </bean>
+
+    <!--设置BaseRepositoryImplHelper辅助类所需的entityManagerFactory-->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod"
+                  value="com.ppcxy.common.repository.jpa.RepositoryHelper.setEntityManagerFactory"/>
+        <property name="arguments" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSourceProxy"/>
+    </bean>
+    <!-- custom end-->
+
+    <!-- production环境 -->
+    <beans profile="production">
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      location="classpath*:/application.properties"/>
+
+        <!-- 数据源配置,使用应用内的 Druid 连接池 -->
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+            <!-- 基本属性 url、user、password -->
+            <property name="url" value="${jdbc.url}"/>
+            <property name="username" value="${jdbc.username}"/>
+            <property name="password" value="${jdbc.password}"/>
+
+            <!-- 配置初始化大小、最小、最大 -->
+            <property name="initialSize" value="${jdbc.pool.initialSize}"/>
+            <property name="minIdle" value="${jdbc.pool.minIdle}"/>
+            <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+
+            <property name="defaultAutoCommit" value="false"/>
+
+            <!-- 配置获取连接等待超时的时间 -->
+            <property name="maxWait" value="${jdbc.pool.maxWait}"/>
+
+            <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+            <property name="timeBetweenEvictionRunsMillis" value="${jdbc.pool.timeBetweenEvictionRunsMillis}"/>
+
+            <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+            <property name="minEvictableIdleTimeMillis" value="${jdbc.pool.minEvictableIdleTimeMillis}"/>
+
+            <property name="validationQuery" value="${jdbc.pool.validationQuery}"/>
+            <property name="testWhileIdle" value="${jdbc.pool.testWhileIdle}"/>
+            <property name="testOnBorrow" value="${jdbc.pool.testOnBorrow}"/>
+            <property name="testOnReturn" value="${jdbc.pool.testOnReturn}"/>
+
+            <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+            <property name="poolPreparedStatements" value="${jdbc.pool.poolPreparedStatements}"/>
+            <property name="maxPoolPreparedStatementPerConnectionSize" value="${jdbc.pool.maxPoolPreparedStatementPerConnectionSize}"/>
+
+            <!-- 配置监控统计拦截的filters -->
+            <property name="filters" value="${jdbc.pool.filters}"/>
+        </bean>
+
+    </beans>
+
+    <!-- local development环境 -->
+    <beans profile="development">
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      location="classpath*:/application.properties,
+          			  classpath*:/application.development.properties"/>
+
+        <bean id="log-filter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+            <property name="resultSetLogEnabled" value="false" />
+        </bean>
+
+        <!-- Druid 连接池 -->
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+            <!-- 基本属性 url、user、password -->
+            <property name="url" value="${jdbc.url}"/>
+            <property name="username" value="${jdbc.username}"/>
+            <property name="password" value="${jdbc.password}"/>
+
+            <!-- 配置初始化大小、最小、最大 -->
+            <property name="initialSize" value="${jdbc.pool.initialSize}"/>
+            <property name="minIdle" value="${jdbc.pool.minIdle}"/>
+            <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+
+            <property name="defaultAutoCommit" value="false"/>
+
+            <!-- 配置获取连接等待超时的时间 -->
+            <property name="maxWait" value="${jdbc.pool.maxWait}"/>
+
+            <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+            <property name="timeBetweenEvictionRunsMillis" value="${jdbc.pool.timeBetweenEvictionRunsMillis}"/>
+
+            <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+            <property name="minEvictableIdleTimeMillis" value="${jdbc.pool.minEvictableIdleTimeMillis}"/>
+
+            <property name="validationQuery" value="${jdbc.pool.validationQuery}"/>
+            <property name="testWhileIdle" value="${jdbc.pool.testWhileIdle}"/>
+            <property name="testOnBorrow" value="${jdbc.pool.testOnBorrow}"/>
+            <property name="testOnReturn" value="${jdbc.pool.testOnReturn}"/>
+
+            <!-- 超过时间限制是否回收 -->
+            <property name="removeAbandoned" value="true" />
+            <!-- 超时时间；单位为秒。180秒=3分钟 -->
+            <property name="removeAbandonedTimeout" value="180" />
+            <!-- 关闭abanded连接时输出错误日志 -->
+            <property name="logAbandoned" value="true" />
+
+            <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+            <property name="poolPreparedStatements" value="${jdbc.pool.poolPreparedStatements}"/>
+            <property name="maxPoolPreparedStatementPerConnectionSize" value="${jdbc.pool.maxPoolPreparedStatementPerConnectionSize}"/>
+
+            <!-- 配置监控统计拦截的filters -->
+            <property name="filters" value="${jdbc.pool.filters}"/>
+            <!-- 取消日志输出，避免性能影响  -->
+            <property name="proxyFilters">
+            <list>
+                <ref bean="log-filter"/>
+            </list>
+            </property>
+        </bean>
+    </beans>
+
+    <!-- functional test环境 -->
+    <beans profile="functional">
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      location="classpath*:/application.properties,
+          			  classpath*:/application.functional.properties,
+          			  classpath*:/application.functional-local.properties"/>
+
+        <!-- Tomcat JDBC连接池 -->
+        <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <property name="driverClassName" value="${jdbc.driver}"/>
+            <property name="url" value="${jdbc.url}"/>
+            <property name="username" value="${jdbc.username}"/>
+            <property name="password" value="${jdbc.password}"/>
+            <property name="defaultAutoCommit" value="false"/>
+
+        </bean>
+
+        <!-- 初始化数据结构 -->
+        <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+            <jdbc:script location="classpath:sql/${run.dbtype}/schema.sql"/>
+            <jdbc:script location="classpath:sql/${run.dbtype}/import-data.sql"/>
+        </jdbc:initialize-database>
+
+    </beans>
+
+    <!-- unit test环境 -->
+    <beans profile="test">
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      location="classpath*:/application.properties,
+          			  classpath*:/application.test.properties"/>
+
+        <!-- Spring Simple连接池 -->
+        <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+            <property name="driverClass" value="${jdbc.driver}"/>
+            <property name="url" value="${jdbc.url}"/>
+            <property name="username" value="${jdbc.username}"/>
+            <property name="password" value="${jdbc.password}"/>
+        </bean>
+
+        <!-- 初始化数据结构与默认数据 -->
+        <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+            <jdbc:script location="classpath:sql/h2/schema.sql"/>
+            <jdbc:script location="classpath:data/h2/import-data.sql" encoding="UTF-8"/>
+        </jdbc:initialize-database>
+
+    </beans>
+</beans>

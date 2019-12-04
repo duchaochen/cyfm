@@ -1,0 +1,21 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springside.org.cn/tags/form"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+
+<%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator"%>
+<%@taglib prefix="cy" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="sys" tagdir="/WEB-INF/tags/sys"%>
+<%@taglib prefix="pretty" tagdir="/WEB-INF/tags/pretty"%>
+<%@taglib prefix="maintain" tagdir="/WEB-INF/tags/maintain"%>
+<%@taglib prefix="cyform" uri="http://www.ppcxy.com/tags/cy-form"%>
+<%@taglib prefix="cyfn" uri="http://www.ppcxy.com/tags/cy-functions"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+
+<%
+    request.setAttribute("cy_systemName", com.ppcxy.manage.maintain.datasource.conf.DsmConstant.SYS_NAME);
+%>
+
+

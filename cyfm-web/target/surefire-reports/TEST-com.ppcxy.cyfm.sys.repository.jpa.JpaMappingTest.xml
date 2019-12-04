@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.ppcxy.cyfm.sys.repository.jpa.JpaMappingTest" time="0.209" tests="1" errors="1" skipped="0" failures="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="D:\Jdk\jdk1.8\jre\bin"/>
+    <property name="java.vm.version" value="25.121-b13"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="I:\桌面\公众号\cyfm"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="I:\桌面\公众号\cyfm"/>
+    <property name="java.runtime.version" value="1.8.0_121-b13"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="D:\Jdk\jdk1.8\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\ADMINI~1.DES\AppData\Local\Temp\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="classworlds.conf" value="D:\install-new\apache-maven-3.6.2\bin\..\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.library.path" value="D:\Jdk\jdk1.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;%JAVA_HOME%\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\PrivateAssemblies\;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;D:\install-new\apache-maven-3.6.2\bin;;."/>
+    <property name="maven.conf" value="D:\install-new\apache-maven-3.6.2\bin\../conf"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="library.jansi.path" value="D:\install-new\apache-maven-3.6.2\bin\..\lib\jansi-native"/>
+    <property name="user.home" value="C:\Users\Administrator.DESKTOP-A1QEVK5"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="GBK"/>
+    <property name="user.name" value="Administrator"/>
+    <property name="java.class.path" value="D:\install-new\apache-maven-3.6.2\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="D:\Jdk\jdk1.8\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="zh"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_121"/>
+    <property name="java.ext.dirs" value="D:\Jdk\jdk1.8\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="D:\Jdk\jdk1.8\jre\lib\resources.jar;D:\Jdk\jdk1.8\jre\lib\rt.jar;D:\Jdk\jdk1.8\jre\lib\sunrsasign.jar;D:\Jdk\jdk1.8\jre\lib\jsse.jar;D:\Jdk\jdk1.8\jre\lib\jce.jar;D:\Jdk\jdk1.8\jre\lib\charsets.jar;D:\Jdk\jdk1.8\jre\lib\jfr.jar;D:\Jdk\jdk1.8\jre\classes"/>
+    <property name="sun.stderr.encoding" value="ms936"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="D:\install-new\apache-maven-3.6.2\bin\.."/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.stdout.encoding" value="ms936"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase name="allClassMapping" classname="com.ppcxy.cyfm.sys.repository.jpa.JpaMappingTest" time="0.209">
+    <error message="org.hibernate.exception.SQLGrammarException: could not prepare statement" type="javax.persistence.PersistenceException"><![CDATA[javax.persistence.PersistenceException: org.hibernate.exception.SQLGrammarException: could not prepare statement
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:344)
+	at org.h2.message.DbException.get(DbException.java:178)
+	at org.h2.message.DbException.get(DbException.java:154)
+	at org.h2.command.Parser.readTableOrView(Parser.java:5213)
+	at org.h2.command.Parser.readTableFilter(Parser.java:1220)
+	at org.h2.command.Parser.parseSelectSimpleFromPart(Parser.java:1859)
+	at org.h2.command.Parser.parseSelectSimple(Parser.java:1968)
+	at org.h2.command.Parser.parseSelectSub(Parser.java:1853)
+	at org.h2.command.Parser.parseSelectUnion(Parser.java:1674)
+	at org.h2.command.Parser.parseSelect(Parser.java:1662)
+	at org.h2.command.Parser.parsePrepared(Parser.java:434)
+	at org.h2.command.Parser.parse(Parser.java:306)
+	at org.h2.command.Parser.parse(Parser.java:278)
+	at org.h2.command.Parser.prepareCommand(Parser.java:243)
+	at org.h2.engine.Session.prepareLocal(Session.java:442)
+	at org.h2.engine.Session.prepareCommand(Session.java:384)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:73)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy$TransactionAwareInvocationHandler.invoke(TransactionAwareDataSourceProxy.java:240)
+	at com.sun.proxy.$Proxy56.prepareStatement(Unknown Source)
+	at org.hibernate.engine.jdbc.internal.StatementPreparerImpl$5.doPrepare(StatementPreparerImpl.java:162)
+	at org.hibernate.engine.jdbc.internal.StatementPreparerImpl$StatementPreparationTemplate.prepareStatement(StatementPreparerImpl.java:186)
+	at org.hibernate.engine.jdbc.internal.StatementPreparerImpl.prepareQueryStatement(StatementPreparerImpl.java:160)
+	at org.hibernate.loader.Loader.prepareQueryStatement(Loader.java:1884)
+	at org.hibernate.loader.Loader.executeQueryStatement(Loader.java:1861)
+	at org.hibernate.loader.Loader.executeQueryStatement(Loader.java:1838)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:909)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:354)
+	at org.hibernate.loader.Loader.doList(Loader.java:2553)
+	at org.hibernate.loader.Loader.doList(Loader.java:2539)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2369)
+	at org.hibernate.loader.Loader.list(Loader.java:2364)
+	at org.hibernate.loader.hql.QueryLoader.list(QueryLoader.java:496)
+	at org.hibernate.hql.internal.ast.QueryTranslatorImpl.list(QueryTranslatorImpl.java:387)
+	at org.hibernate.engine.query.spi.HQLQueryPlan.performList(HQLQueryPlan.java:231)
+	at org.hibernate.internal.SessionImpl.list(SessionImpl.java:1264)
+	at org.hibernate.internal.QueryImpl.list(QueryImpl.java:103)
+	at org.hibernate.jpa.internal.QueryImpl.list(QueryImpl.java:573)
+	at org.hibernate.jpa.internal.QueryImpl.getResultList(QueryImpl.java:449)
+	at com.ppcxy.cyfm.sys.repository.jpa.JpaMappingTest.allClassMapping(JpaMappingTest.java:48)
+]]></error>
+    <system-out><![CDATA[15:54:50.617 [main] WARN  o.s.aop.framework.CglibAopProxy - Unable to proxy interface-implementing method [public final void org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests.setApplicationContext(org.springframework.context.ApplicationContext)] because it is marked as final: Consider using interface-based JDK proxies instead!
+Hibernate: select notificati0_.id as id1_4_, notificati0_.content as content2_4_, notificati0_.publish_date as publish_3_4_, notificati0_.is_read as is_read4_4_, notificati0_.system as system5_4_, notificati0_.title as title6_4_, notificati0_.user_id as user_id7_4_ from cy_maintain_notification_data notificati0_
+15:54:50.656 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: NotificationData
+Hibernate: select remoteapim0_.id as id1_1_, remoteapim0_.join_system_id as join_sys7_1_, remoteapim0_.param_model as param_mo2_1_, remoteapim0_.remark as remark3_1_, remoteapim0_.remote_api_name as remote_a4_1_, remoteapim0_.remote_api_path as remote_a5_1_, remoteapim0_.request_method as request_6_1_ from bus_remote_api remoteapim0_
+15:54:50.658 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: RemoteApiModel
+Hibernate: select roleresour0_.id as id1_11_, roleresour0_.permission_ids as permissi2_11_, roleresour0_.resource_id as resource3_11_, roleresour0_.role_id as role_id4_11_ from cy_sys_role_resource_permission roleresour0_
+15:54:50.661 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: RoleResourcePermission
+Hibernate: select resource0_.id as id1_9_, resource0_.icon as icon2_9_, resource0_._identity as _identit3_9_, resource0_.name as name4_9_, resource0_.parent_id as parent_i5_9_, resource0_.parent_ids as parent_i6_9_, resource0_.resource_type as resource7_9_, resource0_.is_show as is_show8_9_, resource0_.url as url9_9_, resource0_.weight as weight10_9_, (select count(*) from cy_sys_resource f_t where f_t.parent_id = resource0_.id) as formula0_ from cy_sys_resource resource0_
+15:54:50.815 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: Resource
+Hibernate: select role0_.id as id1_10_, role0_.description as descript2_10_, role0_.name as name3_10_, role0_.permissions as permissi4_10_, role0_.value as value5_10_ from cy_sys_role role0_
+Hibernate: select roleresour0_.role_id as role_id4_10_1_, roleresour0_.id as id1_11_1_, roleresour0_.id as id1_11_0_, roleresour0_.permission_ids as permissi2_11_0_, roleresour0_.resource_id as resource3_11_0_, roleresour0_.role_id as role_id4_11_0_ from cy_sys_role_resource_permission roleresour0_ where roleresour0_.role_id in (?, ?) order by roleresour0_.id asc
+15:54:50.834 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: Role
+Hibernate: select permission0_.id as id1_8_, permission0_.description as descript2_8_, permission0_.name as name3_8_, permission0_.value as value4_8_ from cy_sys_permission permission0_
+15:54:50.842 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: Permission
+Hibernate: select exceltempl0_.id as id1_3_, exceltempl0_.resource_identity as resource2_3_, exceltempl0_.template_id as template3_3_ from cy_excel_template exceltempl0_
+15:54:50.845 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 42102, SQLState: 42S02
+15:54:50.845 [main] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Table "CY_EXCEL_TEMPLATE" not found; SQL statement:
+select exceltempl0_.id as id1_3_, exceltempl0_.resource_identity as resource2_3_, exceltempl0_.template_id as template3_3_ from cy_excel_template exceltempl0_ [42102-176]
+]]></system-out>
+  </testcase>
+</testsuite>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="cyfm-web:war">
+    <output-path>$PROJECT_DIR$/cyfm-web/target</output-path>
+    <root id="archive" name="cyfm-web.war">
+      <element id="artifact" artifact-name="cyfm-web:war exploded" />
+    </root>
+  </artifact>
+</component>

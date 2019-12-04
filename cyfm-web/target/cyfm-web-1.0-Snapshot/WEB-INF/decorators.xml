@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/layouts">
+    <excludes>
+        <pattern>/desktop/*/</pattern>
+        <pattern>*/druid/*</pattern>
+        <pattern>/login*</pattern>
+        <pattern>/cxf/*</pattern>
+        <pattern>/api/*</pattern>
+        <pattern>/dp/execute/remote/**</pattern>
+        <pattern>/javasimon/*</pattern>
+        <pattern>/**/tree?*</pattern>
+    </excludes>
+
+
+    <decorator name="content" page="content.jsp"></decorator>
+    <decorator name="mobile" page="mobile.jsp"></decorator>
+    <decorator name="basic" page="basic.jsp"></decorator>
+    <decorator name="default" page="default.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+
+</decorators>

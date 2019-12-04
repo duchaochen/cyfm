@@ -1,0 +1,78 @@
+15:54:19.800 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.permission.RoleResourcePermission]; using defaults.
+15:54:19.807 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.user.UserOnline]; using defaults.
+15:54:19.817 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.manage.entity.maintaion.notification.NotificationData]; using defaults.
+15:54:19.823 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.resource.Resource]; using defaults.
+15:54:19.837 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.permission.Role.roleResourcePermissions]; using defaults.
+15:54:22.412 [springScheduler-1] INFO  c.p.c.s.d.s.U.spring timer job by xml - There are test user in database.
+15:54:24.012 [advancedTopicContainer-1] INFO  c.p.c.s.d.j.a.AdvancedNotifyMessageListener - UserName:calvin, Email:calvin@sringside.org.cn, ObjectType:user
+15:54:28.174 [advancedQueueContainer-4] INFO  c.p.c.s.d.j.a.AdvancedNotifyMessageListener - UserName:calvin, Email:calvin@sringside.org.cn, ObjectType:user
+15:54:31.237 [main] INFO  c.p.c.s.demos.jms.JmsSimpleTest - sended message
+15:54:31.237 [topicContainer-1] INFO  c.p.c.s.d.j.s.NotifyMessageListener - UserName:calvin, Email:calvin@sringside.org.cn
+15:54:33.241 [main] INFO  c.p.c.s.demos.jms.JmsSimpleTest - sended message
+15:54:33.241 [queueContainer-7] INFO  c.p.c.s.d.j.s.NotifyMessageListener - UserName:calvin, Email:calvin@sringside.org.cn
+15:54:35.487 [main] INFO  c.p.c.s.d.u.email.MimeMailService - HTML版邮件已发送至springside3.demo@gmail.com
+15:54:35.497 [main] INFO  c.p.c.s.d.u.email.SimpleMailService - 纯文本邮件已发送至springside3.demo@gmail.com
+15:54:36.537 [JdkTimerJob-0] INFO  c.p.c.s.d.s.U.jdk timer job - There are test user in database.
+15:54:38.603 [springScheduler-1] INFO  c.p.c.s.d.s.U.spring timer job by xml - There are test user in database.
+15:54:50.617 [main] WARN  o.s.aop.framework.CglibAopProxy - Unable to proxy interface-implementing method [public final void org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests.setApplicationContext(org.springframework.context.ApplicationContext)] because it is marked as final: Consider using interface-based JDK proxies instead!
+15:54:50.656 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: NotificationData
+15:54:50.658 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: RemoteApiModel
+15:54:50.661 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: RoleResourcePermission
+15:54:50.815 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: Resource
+15:54:50.834 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: Role
+15:54:50.842 [main] INFO  c.p.c.s.r.jpa.JpaMappingTest - ok: Permission
+15:54:50.845 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 42102, SQLState: 42S02
+15:54:50.845 [main] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Table "CY_EXCEL_TEMPLATE" not found; SQL statement:
+select exceltempl0_.id as id1_3_, exceltempl0_.resource_identity as resource2_3_, exceltempl0_.template_id as template3_3_ from cy_excel_template exceltempl0_ [42102-176]
+15:55:02.085 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.permission.RoleResourcePermission]; using defaults.
+15:55:02.089 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.user.UserOnline]; using defaults.
+15:55:02.095 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.manage.entity.maintaion.notification.NotificationData]; using defaults.
+15:55:02.099 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.resource.Resource]; using defaults.
+15:55:02.102 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.permission.Role.roleResourcePermissions]; using defaults.
+15:55:03.293 [springScheduler-2] INFO  c.p.c.s.d.s.U.spring timer job by xml - There are test user in database.
+15:55:03.348 [main] WARN  o.s.aop.framework.CglibAopProxy - Unable to proxy interface-implementing method [public final void org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests.setApplicationContext(org.springframework.context.ApplicationContext)] because it is marked as final: Consider using interface-based JDK proxies instead!
+15:55:03.383 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 42122, SQLState: 42S22
+15:55:03.383 [main] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Column "USER0_.TOTP_SECRET" not found; SQL statement:
+select user0_.id as id1_13_, user0_.create_date as create_d2_13_, user0_.email as email3_13_, user0_.name as name4_13_, user0_.password as password5_13_, user0_.salt as salt6_13_, user0_.status as status7_13_, user0_.team_id as team_id11_13_, user0_.tel as tel8_13_, user0_.totp_secret as totp_sec9_13_, user0_.username as usernam10_13_ from cy_sys_user user0_ where 1=1 and user0_.name=? [42122-176]
+15:55:14.613 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.permission.RoleResourcePermission]; using defaults.
+15:55:14.616 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.user.UserOnline]; using defaults.
+15:55:14.622 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.manage.entity.maintaion.notification.NotificationData]; using defaults.
+15:55:14.626 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.resource.Resource]; using defaults.
+15:55:14.633 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.permission.Role.roleResourcePermissions]; using defaults.
+15:55:15.775 [springScheduler-1] INFO  c.p.c.s.d.s.U.spring timer job by xml - There are test user in database.
+15:55:15.828 [main] WARN  o.s.aop.framework.CglibAopProxy - Unable to proxy interface-implementing method [public final void org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests.setApplicationContext(org.springframework.context.ApplicationContext)] because it is marked as final: Consider using interface-based JDK proxies instead!
+15:55:15.877 [main] DEBUG c.p.c.s.r.m.T.getWithDetail - ==>  Preparing: select t.id as team_id, t.name as team_name, m.id as master_id, m.name as master_name, m.email as master_email, u.id as user_id, u.name as user_name, u.email as user_email from cy_sys_team t, cy_sys_user m, cy_sys_user u where t.master_id=m.id and t.id=u.team_id and t.id=? 
+15:55:15.887 [main] DEBUG c.p.c.s.r.m.T.getWithDetail - ==> Parameters: 1(Long)
+15:55:15.896 [main] DEBUG c.p.c.s.r.m.T.getWithDetail - <==      Total: 6
+15:55:27.124 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.permission.RoleResourcePermission]; using defaults.
+15:55:27.127 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.user.UserOnline]; using defaults.
+15:55:27.131 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.manage.entity.maintaion.notification.NotificationData]; using defaults.
+15:55:27.135 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.resource.Resource]; using defaults.
+15:55:27.140 [main] WARN  o.h.c.e.AbstractEhcacheRegionFactory - HHH020003: Could not find a specific ehcache configuration for cache named [com.ppcxy.cyfm.sys.entity.permission.Role.roleResourcePermissions]; using defaults.
+15:55:28.232 [springScheduler-1] INFO  c.p.c.s.d.s.U.spring timer job by xml - There are test user in database.
+15:55:28.283 [main] WARN  o.s.aop.framework.CglibAopProxy - Unable to proxy interface-implementing method [public final void org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests.setApplicationContext(org.springframework.context.ApplicationContext)] because it is marked as final: Consider using interface-based JDK proxies instead!
+15:55:28.326 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.search - ==>  Preparing: select id, name, email, username as username, team_id as "team.id" from cy_sys_user WHERE name=? 
+15:55:28.327 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.search - ==> Parameters: 管理员(String)
+15:55:28.331 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.search - <==      Total: 1
+15:55:28.376 [main] DEBUG c.p.c.s.r.m.U.search_COUNT - ==>  Preparing: SELECT count(0) FROM cy_sys_user 
+15:55:28.377 [main] DEBUG c.p.c.s.r.m.U.search_COUNT - ==> Parameters: 
+15:55:28.377 [main] DEBUG c.p.c.s.r.m.U.search_COUNT - <==      Total: 1
+15:55:28.379 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.search - ==>  Preparing: select id, name, email, username as username, team_id as "team.id" from cy_sys_user LIMIT ? 
+15:55:28.380 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.search - ==> Parameters: 3(Integer)
+15:55:28.381 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.search - <==      Total: 3
+15:55:28.395 [main] DEBUG c.p.c.s.r.mybatis.UserMybatisDao.get - ==>  Preparing: select id, name, email, username as username, team_id as "team.id" from cy_sys_user where id=? 
+15:55:28.395 [main] DEBUG c.p.c.s.r.mybatis.UserMybatisDao.get - ==> Parameters: 1(Long)
+15:55:28.396 [main] DEBUG c.p.c.s.r.mybatis.UserMybatisDao.get - <==      Total: 1
+15:55:28.414 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.save - ==>  Preparing: insert into cy_sys_user ( username, name, password, email, team_id) values ( ?, ?, ?, ?, ?) 
+15:55:28.414 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.save - ==> Parameters: User3411(String), User3411(String), null, User3411@springside.org.cn(String), null
+15:55:28.416 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.save - <==    Updates: 1
+15:55:28.419 [main] DEBUG c.p.c.s.r.mybatis.UserMybatisDao.get - ==>  Preparing: select id, name, email, username as username, team_id as "team.id" from cy_sys_user where id=? 
+15:55:28.419 [main] DEBUG c.p.c.s.r.mybatis.UserMybatisDao.get - ==> Parameters: 7(Long)
+15:55:28.419 [main] DEBUG c.p.c.s.r.mybatis.UserMybatisDao.get - <==      Total: 1
+15:55:28.420 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.delete - ==>  Preparing: delete from cy_sys_user where id=? 
+15:55:28.420 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.delete - ==> Parameters: 7(Long)
+15:55:28.421 [main] DEBUG c.p.c.s.r.m.UserMybatisDao.delete - <==    Updates: 1
+15:55:28.422 [main] DEBUG c.p.c.s.r.mybatis.UserMybatisDao.get - ==>  Preparing: select id, name, email, username as username, team_id as "team.id" from cy_sys_user where id=? 
+15:55:28.422 [main] DEBUG c.p.c.s.r.mybatis.UserMybatisDao.get - ==> Parameters: 7(Long)
+15:55:28.422 [main] DEBUG c.p.c.s.r.mybatis.UserMybatisDao.get - <==      Total: 0
+15:55:38.758 [main] WARN  c.p.c.sys.service.user.UserService - 操作员foo尝试修改超级管理员用户

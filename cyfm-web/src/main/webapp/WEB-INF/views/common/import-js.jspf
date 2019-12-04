@@ -1,0 +1,60 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<!-- ================================= JS 公用区域开始 ========================================== -->
+<script>
+    var ctx = _ctx = "${ctx}";
+</script>
+<!--[if lt IE 9]>
+<script src="${ctx}/static/plugins/respond.min.js"></script>
+<script src="${ctx}/static/plugins/excanvas.min.js"></script>
+<![endif]-->
+
+<!-- 插件扩展区 bengin-->
+<script src="${ctx}/static/plugins/angularjs/angular.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/jquery/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/jquery/jquery.metadata.js" type="text/javascript"></script>
+<%-- cookie 扩展插件 --%>
+<script type="text/javascript" src="${ctx}/static/plugins/jquery.cokie.min.js"></script>
+
+<!-- 页面样式表单布局美化 begin-->
+<script src="${ctx}/static/plugins/jquery-ui-bootstrap/js/jquery-ui-1.10.3.custom.js"></script>
+<script src="${ctx}/static/plugins/jquery.layout-latest.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/jquery.blockUI.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="${ctx}/static/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js?1"></script>
+<script type="text/javascript" src="${ctx}/static/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script src="${ctx}/static/plugins/table-drag-sort-resize/table-drag-sort-resize.dev.js?3" type="text/javascript"></script>
+<!-- 页面样式表单布局美化 end-->
+
+<!-- 时间插件 begin -->
+<%--<script src="${ctx}/static/plugins/laydate/laydate.dev.js" type="text/javascript"></script>--%>
+<script src="${ctx}/static/plugins/laydate5.0/laydate.dev.js" type="text/javascript"></script>
+<!-- 时间插件 end-->
+
+<!-- 弹出层 begin -->
+<script src="${ctx}/static/plugins/layer-dialog/layer-dialog.dev.js" type="text/javascript"></script>
+<!-- 弹出层 end -->
+
+<!-- validate校验 begin -->
+<script src="${ctx}/static/plugins/jquery-validation/1.15.0/jquery.validate.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/jquery-validation/1.15.0/additional-methods.js" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/jquery-validation/1.15.0/additional-methods-ppcxy.js?5" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/jquery-validation/1.15.0/localization/messages_zh.js" type="text/javascript"></script>
+<!-- validate校验 end -->
+
+<script src="${ctx}/static/plugins/clipboard/clipboard.js"></script>
+<!-- 分布指引 -->
+<script src="${ctx}/static/plugins/jquery-joyride/jquery.joyride-2.1.js?2" type="text/javascript"></script>
+<script src="${ctx}/static/plugins/jquery-tipsy/jquery.tipsy.js?4" type="text/javascript"></script>
+<!-- 插件扩展区 end-->
+
+<!-- cy api封装 -->
+<script src="${ctx}/static/common/js/common.js?45" type="text/javascript"></script>
+<!-- ================================= JS 公用区域结束 ========================================== -->

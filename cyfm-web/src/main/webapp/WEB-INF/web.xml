@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0"
+         metadata-complete="false">
+
+    <display-name>cyfm</display-name>
+
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>web.cyfm.root</param-value>
+    </context-param>
+
+    <!-- Spring ApplicationContext配置文件的路径,可使用通配符，用于后面的Spring Context Loader -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:/applicationContext.xml
+            classpath*:/applicationContext-cyfm.xml
+        </param-value>
+    </context-param>
+
+    <!-- 設定Spring Context的默认Profile -->
+    <context-param>
+        <param-name>spring.profiles.default</param-name>
+        <param-value>production</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
+    </listener>
+
+    <!--Spring ApplicationContext 载入 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
+    </listener>
+
+    <!-- 可以使用RequestContextHolder.currentRequestAttributes() 获取到请求的attr -->
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+    <!-- Spring配置文件结束 -->
+
+    <!-- 自定义监听器 -->
+    <listener>
+        <listener-class>com.ppcxy.common.extra.listener.StaticListener</listener-class>
+    </listener>
+    <!-- 自定义监听器结束-->
+
+    <!-- Spring MVC Servlet -->
+    <servlet>
+        <servlet-name>springServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/cxf/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- JMX JSON Agent Servlet-->
+    <servlet>
+        <servlet-name>jolokia-agent</servlet-name>
+        <servlet-class>org.jolokia.http.AgentServlet</servlet-class>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>jolokia-agent</servlet-name>
+        <url-pattern>/jolokia/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Java Simple Monitoring Console Servlet -->
+    <servlet>
+        <servlet-name>SimonConsoleServlet</servlet-name>
+        <servlet-class>org.javasimon.console.SimonConsoleServlet</servlet-class>
+        <init-param>
+            <param-name>url-prefix</param-name>
+            <param-value>/javasimon</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SimonConsoleServlet</servlet-name>
+        <url-pattern>/javasimon/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Content Servlet 配置 -->
+    <servlet>
+        <servlet-name>StaticContentServlet</servlet-name>
+        <servlet-class>com.ppcxy.cyfm.showcase.demos.web.StaticContentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StaticContentServlet</servlet-name>
+        <url-pattern>/static-content</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RemoteContentServlet</servlet-name>
+        <servlet-class>com.ppcxy.cyfm.showcase.demos.web.RemoteContentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RemoteContentServlet</servlet-name>
+        <url-pattern>/remote-content</url-pattern>
+    </servlet-mapping>
+
+    <!-- Filter 定义 -->
+    <!-- Character Encoding filter -->
+
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+    <!-- Open Entity Manager in View filter -->
+    <!--
+    <filter>
+         <filter-name>openEntityManagerInViewFilter</filter-name>
+         <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+     </filter>
+     <filter-mapping>
+         <filter-name>openEntityManagerInViewFilter</filter-name>
+         <url-pattern>/*</url-pattern>
+     </filter-mapping>
+     -->
+
+    <filter>
+        <filter-name>DebugRequestAndResponseFilter</filter-name>
+        <filter-class>com.ppcxy.common.web.filter.DebugRequestAndResponseFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>DebugRequestAndResponseFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+    <!-- Shiro Security filter -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+    <!-- 验证码过滤器需要放到Shiro之后 因为Shiro将包装HttpSession 如果不 可能造成两次的sesison id 不一样 -->
+    <filter>
+        <filter-name>JCaptchaFilter</filter-name>
+        <filter-class>com.ppcxy.common.web.jcaptcha.JCaptchaFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>JCaptchaFilter</filter-name>
+        <url-pattern>/jcaptcha.jpg</url-pattern>
+    </filter-mapping>
+
+    <!-- 记录访问日志，比如审计之类的可用 -->
+    <filter>
+        <filter-name>AccessLogFilter</filter-name>
+        <filter-class>com.ppcxy.common.web.filter.AccessLogFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>blackListURL</param-name>
+            <param-value>/static/**,*.js,*.css,*.jpg,*.gif,*.png,*.ico,/manage/monitor/druid/**</param-value>
+        </init-param>
+        <init-param>
+            <param-name>whiteListURL</param-name>
+            <param-value>/**</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AccessLogFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <!-- Cache Control Header filter -->
+    <filter>
+        <filter-name>cacheControlHeaderFilter</filter-name>
+        <filter-class>com.ppcxy.common.web.filter.CacheControlHeaderFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>cacheControlHeaderFilter</filter-name>
+        <url-pattern>/static/*</url-pattern>
+    </filter-mapping>
+
+    <!-- preSiteMesh filter-->
+    <filter>
+        <filter-name>preSiteMeshFilter</filter-name>
+        <filter-class>com.ppcxy.common.web.filter.PreSiteMeshFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>blackListURL</param-name>
+            <param-value>/static/**,*.ajax,*.json,*.js,*.css,*.jpg,*.gif,*.png,*.ico,/manage/monitor/druid/**
+            </param-value>
+        </init-param>
+        <init-param>
+            <param-name>whiteListURL</param-name>
+            <param-value>/**</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>preSiteMeshFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- SiteMesh Web-Page Layout filter-->
+    <filter>
+        <filter-name>sitemeshFilter</filter-name>
+        <filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>sitemeshFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--druid 监控-->
+    <filter>
+        <filter-name>DruidWebStatFilter</filter-name>
+        <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>exclusions</param-name>
+            <param-value>/static/*,*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
+        </init-param>
+        <init-param>
+            <param-name>principalSessionName</param-name>
+            <param-value>username</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>DruidWebStatFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- druid监控 -->
+    <servlet>
+        <servlet-name>DruidStatView</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DruidStatView</servlet-name>
+        <url-pattern>/manage/monitor/druid/*</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>/</welcome-file>
+    </welcome-file-list>
+    <!-- 出错页面定义 -->
+    <!-- 错误页面映射 -->
+    <error-page>
+        <error-code>400</error-code>
+        <location>/WEB-INF/views/error/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/views/error/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/error/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>405</error-code>
+        <location>/WEB-INF/views/error/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/views/error/error.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/WEB-INF/views/error/error.jsp</location>
+    </error-page>
+</web-app>

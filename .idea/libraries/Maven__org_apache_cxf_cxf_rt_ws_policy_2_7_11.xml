@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.cxf:cxf-rt-ws-policy:2.7.11">
+    <CLASSES>
+      <root url="jar://D:/repository/org/apache/cxf/cxf-rt-ws-policy/2.7.11/cxf-rt-ws-policy-2.7.11.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/org/apache/cxf/cxf-rt-ws-policy/2.7.11/cxf-rt-ws-policy-2.7.11-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/org/apache/cxf/cxf-rt-ws-policy/2.7.11/cxf-rt-ws-policy-2.7.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

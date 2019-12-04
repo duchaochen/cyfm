@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <description>公式引擎的配置文件</description>
+
+    <bean id="functionExtBox" class="com.ppcxy.cyfm.nbpm.calcengine.funs.FunctionExtBox">
+        <property name="functionExts">
+            <set>
+                <bean class="com.ppcxy.cyfm.nbpm.calcengine.funs.impl.SqlExecuteFun"/>
+            </set>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cyfm.iml" filepath="$PROJECT_DIR$/cyfm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cyfm-web/cyfm-web.iml" filepath="$PROJECT_DIR$/cyfm-web/cyfm-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ppcxy-common/ppcxy-common.iml" filepath="$PROJECT_DIR$/ppcxy-common/ppcxy-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ppcxy-parent/ppcxy-parent.iml" filepath="$PROJECT_DIR$/ppcxy-parent/ppcxy-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ppcxy-web-extra/ppcxy-web-extra.iml" filepath="$PROJECT_DIR$/ppcxy-web-extra/ppcxy-web-extra.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<script type="text/javascript" charset="utf-8" src="${ctx}/static/plugins/echarts/echarts.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/static/plugins/echarts/echarts-gl.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/static/plugins/echarts/world.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/static/plugins/echarts/china.js?4"></script>

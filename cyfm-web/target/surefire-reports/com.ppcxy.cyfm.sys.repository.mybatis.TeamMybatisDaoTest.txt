@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.ppcxy.cyfm.sys.repository.mybatis.TeamMybatisDaoTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.416 sec - in com.ppcxy.cyfm.sys.repository.mybatis.TeamMybatisDaoTest

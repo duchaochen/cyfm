@@ -1,0 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<script type="text/javascript" charset="utf-8" src="${ctx}/static/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/static/plugins/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/static/plugins/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/static/plugins/ueditor/formdesign/cyfm.formdesign.js"></script>
+<style>
+    span {
+        display: inline;
+    }
+</style>

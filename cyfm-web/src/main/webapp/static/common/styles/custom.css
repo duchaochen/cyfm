@@ -1,0 +1,372 @@
+/* here you can put your own css to customize and override the theme */
+
+/***
+Rounded Portlets
+***/
+/*
+.portlet {
+    border-radius: 4px !important;
+}
+
+.portlet .portlet-title {
+    border-radius: 4px 4px 0px 0px !important;
+}
+
+.portlet .portlet-body,
+.portlet .portlet-body .form-actions  {
+    border-radius: 0px 0px 4px 4px !important;
+}
+*/
+
+/*
+Change Quick Sidebar Width
+*/
+
+/*
+.page-quick-sidebar-wrapper {
+  right: -370px;
+  width: 370px;
+}
+
+.page-quick-sidebar-open.page-quick-sidebar-push-content .page-sidebar-wrapper {
+  margin-left: -370px;
+}
+
+.page-quick-sidebar-open.page-quick-sidebar-push-content .page-footer {
+  margin-right: 370px;
+  margin-left: -370px;
+}
+
+.page-sidebar-reversed.page-quick-sidebar-open.page-quick-sidebar-push-content .page-sidebar-wrapper {
+  margin-right: 370px;
+}
+
+.page-quick-sidebar-open.page-quick-sidebar-push-content.page-quick-sidebar-full-height .page-header {
+  margin-left: -370px;
+}
+
+.page-quick-sidebar-wrapper .page-quick-sidebar .page-quick-sidebar-list {
+  width: 370px !important;
+}
+
+.page-quick-sidebar-wrapper .page-quick-sidebar .page-quick-sidebar-item {
+  width: 370px !important;
+  margin-left: 370px;
+}
+
+.page-quick-sidebar-wrapper .page-quick-sidebar .page-quick-sidebar-content-item-shown .page-quick-sidebar-list {
+  margin-left: -370px;
+}
+*/
+ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+form input.error {
+    border: solid 1px red;
+}
+
+form input.valid {
+    border: solid 1px green;
+}
+
+/* 验证错误提示信息*/
+form span.error {
+    width: 200px;
+    margin-left: 10px;
+    color: Red;
+}
+
+div.sort-title, div.sort {
+    display: inline;
+}
+
+.table-pagination {
+    padding-top: 5px;
+    border-top: 1px solid #ddd;
+}
+
+.toggle-search {
+    display: none;
+}
+
+.searchTools {
+    display: block;
+}
+
+@media ( max-width: 768px) {
+    .toggle-search {
+        display: block;
+    }
+
+    .searchTools {
+        display: none;
+    }
+
+    /*.table-scrollable > .table-bordered > thead > tr:last-child > th, .table-scrollable > .table-bordered > tbody > tr:last-child > th, .table-scrollable > .table-bordered > tfoot > tr:last-child > th, .table-scrollable > .table-bordered > thead > tr:last-child > td, .table-scrollable > .table-bordered > tbody > tr:last-child > td, .table-scrollable > .table-bordered > tfoot > tr:last-child > td {*/
+    /*border: 1px solid #ddd;*/
+    /*}*/
+    /*table.table-bordered tbody th, .flip-scroll table.table-bordered tbody td {*/
+    /*border-left-width: 0;*/
+    /*border-bottom-width: 1px;*/
+    /*}*/
+    table th {
+        padding-bottom: 4px;
+        min-width: 100px;
+        text-align: center;
+    }
+
+    .datepicker-days table th {
+        min-width: 0;
+    }
+
+    th.check, td.check {
+        width: auto;
+    }
+
+    .table-pagination {
+        border-top: 0;
+    }
+
+    table tr:last-child td {
+        border-bottom: 1px solid #ddd !important;
+    }
+}
+
+a.check {
+    color: #000;
+}
+
+th.check, td.check {
+    width: 50px;
+    text-align: center;
+}
+
+.check input {
+    margin-top: auto;
+
+}
+
+.treeContent {
+    padding: 5px;
+    background-color: #fff;
+    border: solid 1px #cccccc;
+}
+
+#startload {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 9999;
+    opacity: 0.9;
+    overflow: hidden;
+    padding-top: 45%;
+    background: #000 url("../img/loading5.gif") no-repeat 50% center;
+}
+
+table.table-condensed span {
+    padding-right: 5px;
+}
+
+table.table-condensed .switch {
+    text-align: center;
+}
+
+body {
+    font-size: 13px;
+}
+
+.portlet {
+    margin-bottom: 10px;
+}
+
+.table-striped tbody tr.active:nth-child(odd) td, .table-striped tbody tr.active:nth-child(odd) th {
+    background-color: #A6D7E6;
+}
+
+.table tbody tr.active:hover td, .table tbody tr.active:hover th {
+    background-color: #A6ABE6 !important;
+}
+
+.table-toolbar {
+    padding: 5px 0;
+}
+
+.laydate_box, .laydate_box * {
+    box-sizing: content-box;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    /*-webkit-box-shadow: #2b3643;*/
+    -webkit-border-radius: 10px;
+    border-radius: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 0;
+    background: rgba(171, 171, 171, 0.8);
+    /*-webkit-box-shadow: #2b3643;*/
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/*用来控制table的适应当前窗口展示*/
+div.listTableWrap {
+    overflow-x: auto;
+    /*border-left: 1px solid #ccc;*/
+    /*border-right: 1px solid #ccc;*/
+    width: 100%;
+}
+
+div.content-wrap {
+    padding-right: 1px;
+    padding-bottom: 5px;
+}
+
+/* Scroll Top Top */
+.scroll-box {
+    display: inline-block;
+    padding: 1px;
+    text-align: center;
+    position: fixed;
+    bottom: 0px;
+    z-index: 10000;
+    display: block;
+    background: #fff;
+}
+
+.scroll-to-top {
+    display: inline-block;
+    padding: 1px;
+    text-align: center;
+    position: fixed;
+    bottom: 44px;
+    z-index: 10001;
+    display: none;
+    right: 5px;
+}
+
+.scroll-to-top > i {
+    display: inline-block;
+    color: #687991;
+    font-size: 30px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+
+.scroll-to-top:hover {
+    cursor: pointer;
+}
+
+.scroll-to-top:hover > i {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+@media (min-width: 992px) {
+    /* 992px */
+    .scroll-to-top {
+        right: 5px;
+        bottom: 5px;
+    }
+}
+
+@media (max-width: 991px) {
+    /* 991px */
+    .scroll-to-top {
+        bottom: 5px;
+        right: 5px;
+    }
+
+    .scroll-to-top > i {
+        font-size: 28px;
+    }
+}
+
+.scroll-box::-webkit-scrollbar {
+    height: 20px;
+}
+
+/*定义滚动条的轨道颜色、内阴影及圆角*/
+.scroll-box::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .0);
+    background-color: transparent;
+    /*border-radius: 3px;*/
+}
+
+
+/*定义滑块颜色、内阴影及圆角*/
+.scroll-box::-webkit-scrollbar-thumb {
+    /*border-radius: 7px;*/
+    -webkit-box-shadow: inset 0 0 6px rgba(138, 136, 129, 0.8);
+    background-color: rgba(138, 136, 129, 0.8);
+}
+
+/*定义两端按钮的样式*/
+.scroll-box::-webkit-scrollbar-button {
+    /*background-color:cyan;*/
+}
+
+/*定义右下角汇合处的样式*/
+.scroll-box::-webkit-scrollbar-corner {
+    background: transparent;
+    border: 0;
+}
+
+.scroll-box .scroll {
+    background-color: rgba(255, 255, 255, .9);
+}
+
+.listTableWrap::-webkit-scrollbar {
+    height: 10px;
+}
+
+/**
+处理查询框中select对齐问题
+ */
+.search-toolbar select.form-control {
+    display: inline;
+}
+
+/* 处理选项卡过多换行后对齐问题，主要针对手机端 */
+.tabbable-line > .nav-tabs > li {
+    border-bottom: 4px solid transparent;
+}
+
+/* colorpicker css */
+.input-group.color .input-group-btn i {
+    position: absolute;
+    display: block;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    right: 6px;
+}
+
+.content-wrap {
+    margin-bottom: 5px;
+}
+
+.listTableWrap {
+    height: 400px;
+}

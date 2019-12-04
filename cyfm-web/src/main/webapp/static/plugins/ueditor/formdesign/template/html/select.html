@@ -1,0 +1,574 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>下拉菜单</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+
+    <!--   <link href="/static/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
+    <link href="/static/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/select2/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/jquery-multi-select/css/multi-select.css"/>
+    <!-- BEGIN THEME STYLES -->
+    <link href="/static/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+
+    <link href="/static/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css"/>
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" href="main.style.css">
+  
+    <script type="text/javascript" src="../dialogs/internal.js"></script>
+    <script type="text/javascript">
+function createElement(type, name)
+{     
+    var element = null;     
+    try {        
+        element = document.createElement('<'+type+' name="'+name+'">');     
+    } catch (e) {}   
+    if(element==null) {     
+        element = document.createElement(type);     
+        element.name = name;     
+    } 
+    return element;     
+}
+function fnSelect( combo ) {
+    var iIndex = combo.selectedIndex ;
+    oListText.selectedIndex    = iIndex ;
+    var olistText    = document.getElementById( "orgtext" ) ;
+    olistText.value    = oListText.value ;
+}
+
+function fnAdd() {
+    var olistText = document.getElementById( "orgtext" ) ;
+    var orgtext = $("#orgtext");
+//    if($("#dataType").val()=="number"){
+//        var s = /^[\-\+]?\d+$/;
+//        if(!s.test(orgtext.val())){
+//            alert("不是有效的整数");
+//            return false;
+//        }
+//    }
+
+    if($("#dataType").val()=="number"|| $("#dataType").val()=="dbnumber"){
+        var s = /^[0-9]*$/;
+        if ($("#dataType").val()=="dbnumber"){
+            s = /^[\-\+]?((([0-9]{1,3})([,][0-9]{3})*)|([0-9]+))?([\.]([0-9]+))?$/;
+        }
+
+        if(!s.test(orgtext.val())){
+            alert("无效的数字");
+            return false;
+        }
+    }
+
+    if(oListText.length>50){
+        alert("显示值长度请误大于50.");
+        return;
+    }
+
+    var dataLength = $("#dataLength").val();
+    var dataType = $("#dataType").val();
+
+    var valueLegth = olistText.value.length;
+
+    if(dataType=="varchar"){
+        if (Math.floor(dataLength/3)<valueLegth){
+            alert("value值长度超出允许范围,最大长度"+Math.floor(dataLength/3)+"!");
+            return;
+        }
+    }else
+
+    if(dataType=="number"){
+        if (olistText.value>9999999999){
+            alert("value值超出允许范围,最大值9999999999!");
+            return;
+        }
+    } else
+    if(dataType=="dbnumber"){
+        if (olistText.value>9999999999.9999){
+            alert("value值超出允许范围,最大值9999999999.9999!");
+            return;
+        }
+    }
+    fnAddComboOption( oListText, olistText.value, olistText.value ) ;
+    oListText.selectedIndex = oListText.options.length - 1 ;
+    olistText.value  = '' ;
+    olistText.focus() ;
+}
+
+function fnModify() {
+    var orgtext = $("#orgtext");
+    if($("#dataType").val()=="number"|| $("#dataType").val()=="dbnumber"){
+        var s = /^[0-9]*$/;
+        if ($("#dataType").val()=="dbnumber"){
+            s = /^[\-\+]?((([0-9]{1,3})([,][0-9]{3})*)|([0-9]+))?([\.]([0-9]+))?$/;
+        }
+        if(!s.test(orgtext.val())){
+            alert("无效的数字");
+            return false;
+        }
+    }
+    var iIndex = oListText.selectedIndex ;
+    if ( iIndex < 0 ) return ;
+    var olistText    = document.getElementById( "orgtext" ) ;
+    oListText.options[ iIndex ].innerHTML    = fnHTMLEncode( olistText.value ) ;
+    oListText.options[ iIndex ].value        = olistText.value ;
+    olistText.value    = '' ;
+    olistText.focus() ;
+}
+
+function fnMove( steps ) {
+    fnChangeOptionPosition( oListText, steps ) ;
+}
+
+function fnDelete() {
+    fnRemoveSelectedOptions( oListText ) ;
+}
+
+function fnSetSelectedValue() {
+    var iIndex = oListText.selectedIndex ;
+    if ( iIndex < 0 ) return ;
+    var olistText = document.getElementById( "orgvalue" ) ;
+    olistText.innerHTML = oListText.options[ iIndex ].value ;
+}
+
+// Moves the selected option by a number of steps (also negative)
+function fnChangeOptionPosition( combo, steps ) {
+    var iActualIndex = combo.selectedIndex ;
+    if ( iActualIndex < 0 ){
+        return ;
+    }
+    var iFinalIndex = iActualIndex + steps ;
+    if ( iFinalIndex < 0 ){
+        iFinalIndex = 0 ;
+    }
+    if ( iFinalIndex > ( combo.options.length - 1 ) ) {
+        iFinalIndex = combo.options.length - 1 ;
+    }
+    if ( iActualIndex == iFinalIndex ) {
+        return ;
+    }
+    var oOption = combo.options[ iActualIndex ] ;
+    if(oOption.value=="") {
+        var sText    = fnHTMLDecode( oOption.value ) ;
+    } else {
+        var sText    = fnHTMLDecode( oOption.innerHTML ) ;
+    }
+    combo.remove( iActualIndex ) ;
+    oOption = fnAddComboOption( combo, sText, sText, null, iFinalIndex ) ;
+    oOption.selected = true ;
+}
+
+// Remove all selected options from a SELECT object
+function fnRemoveSelectedOptions( combo ) {
+    // Save the selected index
+    var iSelectedIndex = combo.selectedIndex ;
+    var oOptions = combo.options ;
+    // Remove all selected options
+    for ( var i = oOptions.length - 1 ; i >= 0 ; i-- ) {
+        if (oOptions[i].selected) combo.remove(i) ;
+    }
+
+    // Reset the selection based on the original selected index
+    if ( combo.options.length > 0 ) {
+        if ( iSelectedIndex >= combo.options.length ) iSelectedIndex = combo.options.length - 1 ;
+        combo.selectedIndex = iSelectedIndex ;
+    }
+}
+
+// Add a new option to a SELECT object (combo or list)
+function fnAddComboOption( combo, optionText, optionValue, documentObject, index ) {
+    var oOption ;
+    if ( documentObject ) {
+        oOption = documentObject.createElement("option") ;
+    } else {
+        oOption = document.createElement("option") ;
+    }
+    if ( index != null ) {
+        combo.options.add( oOption, index ) ;
+    } else {
+        combo.options.add( oOption ) ;
+    }
+    oOption.innerHTML = optionText.length > 0 ? fnHTMLEncode( optionText ) : '&nbsp;' ;
+    oOption.title = oOption.innerHTML;
+    oOption.value     = optionValue ;
+    return oOption ;
+}
+
+function fnHTMLEncode( text ) {
+    if ( !text ) {
+        return '' ;
+    }
+    text = text.replace( /&/g, '&amp;' ) ;
+    text = text.replace( /</g, '&lt;' ) ;
+    text = text.replace( />/g, '&gt;' ) ;
+    return text ;
+}
+
+
+function fnHTMLDecode( text ) {
+    if ( !text ) {
+        return '' ;
+    }
+    text = text.replace( /&gt;/g, '>' ) ;
+    text = text.replace( /&lt;/g, '<' ) ;
+    text = text.replace( /&amp;/g, '&' ) ;
+    return text ;
+}
+
+function fnSetAttribute( element, attName, attValue ) {
+    if ( attValue == null || attValue.length == 0 ){
+        element.removeAttribute( attName, 0 ) ;        
+    } else {
+        element.setAttribute( attName, attValue, 0 ) ;    
+    }
+}
+    </script>
+</head>
+<body>
+<div class="content">
+    <table class="table table-bordered table-striped table-hover">
+     <tr>
+         <th><span>控件类型</span></th>
+         <th><span>绑定存储</span></th>
+    </tr>
+    <tr>
+        <td>
+            <select id="orgtype">
+                <option value="0">绑定字段控件</option>
+                <option value="1">普通文本控件</option>
+            </select>
+        </td>
+        <td>
+            <input type="hidden" id="isChange" ><!--字段是否重新选择 -->
+            <input type="hidden" id="dataType" ><!--字段类型 -->
+            <input type="hidden" id="nullable"><!--是否为空 -->
+            <input type="hidden" id="dataLength"><!--字段长度-->
+            <input type="hidden" id="dataid">
+            <select class="form-control input-medium select2me" data-placeholder="请选择绑定存储" id="orgname">
+            </select>
+        </td>
+    </tr>
+    <!--<tr style="display: none;">-->
+        <!--<th>-->
+        <!--<span>关联子菜单名称</span> <a id="showTips" data-content="若关联子菜单，需要子下拉菜单设置的时候在每个选项后加上特殊标记以记录与父菜单关系，形如“子菜单项目|父菜单项目”，则父菜单发生变化，子菜单会随之自动刷新筛选" rel="popover" data-original-title="说明"><i class="icon-info-sign"></i></a> </th>-->
+        <!--<td><input id="orgChild" type="text" size="20" > </td>-->
+    <!--</tr>-->
+    <tr>
+        <th><span>控件样式</span> </th>
+        <th><span>初始选定</span></th>
+    </tr>
+    <tr>
+        <td>宽：<input id="orgwidth" type="text" value="200" class=" span1"/> px&nbsp;&nbsp;&nbsp;&nbsp;高：<input id="orgsize" type="text" class=" span1" value="1"/> 行</td>
+        <td><span id="orgvalue" class="uneditable-input" style="height:25px;"></span> </td>
+    </tr>
+    <tr>
+        <th colspan="2">
+            <span>列表值</span> SignatureInfo
+        </th>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <select id="orglist"  multiple="multiple" class="span14"></select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="btn-group pull-right">
+                <a title="新增" onclick="fnAdd();" id="fnAdd" class="btn btn-primary"><i class="icon-white icon-plus"></i></a>
+                <a title="修改" onclick="fnModify();" id="fnModify" class="btn btn-default"><i class="icon-edit"></i></a>
+            </div>
+            <!--<input class="date-picker" data-date-format="yyyy-mm-dd"  readonly="true" placeholder="请选择默认值"/>-->
+            <input type="text" placeholder="输入列表值..."  id="orgtext" class="date-picker"  data-date-format="yyyy-mm-dd">
+        </td>
+        <td>
+            <div class="btn-group">
+                <button title="上移" onclick="fnMove(-1);" class="btn btn-default"><i class="icon-arrow-up"></i></button>
+                <button title="下移" onclick="fnMove(1);" class="btn btn-default"><i class="icon-arrow-down"></i></button>
+                <button title="设为初始化时选定值" onclick="fnSetSelectedValue();" class="btn btn-default"><i class="icon-ok-circle"></i></button>
+                <button title="删除" onclick="fnDelete();" class="btn btn-default"><i class="icon-ban-circle"></i></button>
+            </div>
+        </td>
+        
+    </tr>
+    </table>
+</div>
+<script src="/static/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/static/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+
+<script src="/static/global/plugins/moment/min/moment.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/moment/locale/zh-cn.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script type="text/javascript" src="columnValidation.js"></script>
+<script src="/static/global/plugins/bootbox/bootbox.min.js"></script>
+<script src="/static/global/plugins/Math.uuid.js"></script>
+<script type="text/javascript">
+    var oNode = null,oListText='',thePlugins = 'select';
+    window.onload = function() {
+        oListText = $G('orglist');
+        var gName = "";
+        $("#orgtype").bind("change",function(){
+            if( $(this).val()=="1"){
+                //禁用字段下拉框
+                $("#orgname").prop("disabled",true);
+                $("#orgname").select2("val", null);
+            }else{
+                $("#orgname").prop("disabled",false);
+            }
+
+        })
+        if($("#orgtype").val()==1){
+            $("#orgname").prop("disabled",true);
+            $("#orgname").select2("val", null);
+        }
+        if( UE.plugins[thePlugins].editdom ){
+            oNode = UE.plugins[thePlugins].editdom;
+            gName=oNode.getAttribute('name').replace(/&quot;/g,"\""),gWidth=oNode.getAttribute('orgwidth'),gSize=oNode.getAttribute('size');
+            gName = gName==null ? '' : gName;
+            $G('orgvalue').innerHTML = oNode.value;
+            $G('orgname').value = gName;
+            
+            $G('orgsize').value = gSize;
+            $G('orgwidth').value = gWidth;
+            for ( var i = 0 ; i < oNode.options.length ; i++ ) {
+                var sText    = oNode.options[i].value ;
+                fnAddComboOption( oListText, sText, sText ) ;
+            }
+            var gType=oNode.getAttribute('orgtype');
+            $G('orgtype').value = gType;
+            if($("#orgtype").val()==1){
+                $("#orgname").prop("disabled",true);
+                $("#orgname").select2("val", null);
+            }
+        }
+        var tableId = window.parent.document.getElementById("tableId").value;
+        $.ajax({
+            type: "GET",
+            url: "/formdesigner/formlink/genForm?tableId="+tableId,
+            dataType:'json',
+            success: function(data){
+                var selectHTML = "";
+                for(var i=0;i<data.length;i++){
+                    selectHTML += "<option value=\"" + data[i].field + "\" dataValue=\"" + (data[i].defaultValue==undefined?"":data[i].defaultValue.replace(/"|\&quot;/g,"'''")) + "\" dataid=\"" + data[i].id + "\"  dataType=\"" + data[i].type + "\" nullable=\"" + data[i].nullable + "\" dataLength=\"" + data[i].length + "\" >[" + data[i].title + "]" + data[i].field + "—类型：" + data[i].type + "-空：" + data[i].nullable + "</option>";
+                }
+                $("#orgname").append(selectHTML).val(gName).change();
+
+                var orgname = $("#orgname").val();
+
+                $("#isChange").val(orgname);
+                if($("#orgname").find("option:selected").attr("dataType")=="date") {
+                    var orgtext = $("#orgtext");
+                    orgtext.attr("readOnly","true");
+                    $(".date-picker").datepicker({
+                        language: 'zh-CN'
+                    });
+                }
+
+                var dataLength = $("#orgname").find("option:selected").attr("dataLength");
+                $("#dataLength").val(dataLength);
+                //带回时候的数据类型
+                var dataType = $("#orgname").find("option:selected").attr("dataType");
+                $("#dataType").val(dataType);
+                //带回时候的数据是否为空
+                var nullable = $("#orgname").find("option:selected").attr("nullable");
+                $("#nullable").val(nullable);
+                //字段id
+                var dataid = $("#orgname").find("option:selected").attr("dataid");
+                $("#dataid").val(dataid);
+
+
+                $("#orgname").bind("change",function(){
+                    $("#orglist").empty();
+                    var orgtext = $("#orgtext");
+                    orgtext.val("");
+                    orgtext.datepicker( "remove" );
+                    if(typeof(orgtext.attr("readonly"))!="undefined"){
+                        orgtext.removeAttr("readonly");
+                    }
+                    if(typeof(orgtext.attr("data-date-format"))!="undefined"){
+                        orgtext.removeAttr("data-date-format");
+                    }
+                    if(orgtext.hasClass("date-picker")){
+                        orgtext.removeClass("date-picker");
+                    }
+                    var orgvalue = $(this).context.selectedOptions.item(0).attributes.getNamedItem("dataType").value;
+                    $("#dataType").val(orgvalue);
+                    if(orgvalue=="date"){
+                        orgtext.addClass("date-picker");
+                        orgtext.attr("data-date-format","yyyy-mm-dd");
+                        orgtext.attr("readOnly","true");
+                        $(".date-picker").datepicker({
+                            language: 'zh-CN'
+                        });
+                    }
+                    dataid=$(this).context.selectedOptions.item(0).attributes.getNamedItem("dataid").value;
+                    $("#dataid").val(dataid);
+
+                    var orgname = $("#orgname").val();
+                    $("#isChange").val(orgname);
+                    var dataLength = $("#orgname").find("option:selected").attr("dataLength");
+                    $("#dataLength").val(dataLength);
+                    //带回时候的数据类型
+                    var dataType = $("#orgname").find("option:selected").attr("dataType");
+                    $("#dataType").val(dataType);
+                    //带回时候的数据是否为空
+                    var nullable = $("#orgname").find("option:selected").attr("nullable");
+                    $("#nullable").val(nullable);
+                    
+                });
+            }
+        });
+        if ($().select2) {
+            $('.select2me').select2({
+                placeholder: "Select",
+                allowClear: true
+            });
+        }
+        /*$('#showTips').popover();*/
+    }
+    dialog.oncancel = function () {
+        if( UE.plugins[thePlugins].editdom ) {
+            delete UE.plugins[thePlugins].editdom;
+        }
+    };
+    dialog.onok = function (){
+        if($G('orgname').value=='' && $("#orgtype").val()==0){
+            bootbox.alert('请选择绑定存储');
+            return false;
+        }
+        if( oListText.options.length == 0 ) {
+            alert('请添加下拉菜单选项！');
+            return false;
+        }
+        var gSize = $G('orgsize').value ;
+        if ( gSize == null || isNaN( gSize ) || gSize < 1 ) {
+            gSize = '' ;
+        }
+        var gWidth=$G('orgwidth').value;
+        var gType=$G('orgtype').value;
+        var dataid=$G('dataid').value;
+        if( !oNode ) {
+            try {
+                //oNode = document.createElement("select");
+                oNode = createElement('select','none');
+                oNode.setAttribute('name',$G('orgname').value);
+                oNode.setAttribute('plugins',thePlugins );
+                oNode.setAttribute('size',gSize);
+                if(gType==1) {
+                    if (!oNode.hasAttribute('customid')) {
+                        oNode.setAttribute('customid', Math.uuid());
+                    }
+                }else{
+                    oNode.setAttribute('dataid',dataid);
+                }
+                if( gType != '' ) {
+                    oNode.setAttribute('orgtype',gType );
+                }
+                columnValidation(oNode,true);//字段类型验证
+                
+                if ( $G('orgwidth').value!= '' ) {
+                    oNode.style.width =  $G('orgwidth').value+ 'px';
+                    //oNode.setAttribute('style','width:'+ $G('orgwidth').value + 'px;');
+                }
+                if( gWidth != '' ) {
+                    oNode.style.width = gWidth + 'px';
+                    oNode.setAttribute('orgwidth',gWidth );
+                }
+               
+                // Add all available options.
+                for ( var i = 0 ; i < oListText.options.length ; i++ ) {
+                    var sText    = oListText.options[i].value ;
+                    if ( sText.length == 0 ) {
+                        sText = sText ;
+                    }
+                    var oOption = fnAddComboOption( oNode, sText, sText ) ;
+                    if ( sText == $G('orgvalue').innerHTML ) {
+                        fnSetAttribute( oOption, 'selected', 'selected' ) ;
+                        oOption.selected = true ;
+                    }
+                }
+                //firefox要利用span
+                editor.execCommand('insertHtml','{|-<span designerPlugins="select">'+oNode.outerHTML+'&nbsp;&nbsp;</span>-|}');
+                return true ;
+            } catch ( e ) {
+                try {
+                    editor.execCommand('error');
+                } catch ( e ) {
+                    alert('控件异常！');
+                }
+                return false;
+            }
+        } else {
+            if( gType != '' ) {
+                oNode.setAttribute('orgtype',gType );
+            }else{
+                oNode.setAttribute('orgtype', '');
+            }
+            if(gType==0){
+                oNode.setAttribute('dataid',dataid);
+            }else{
+                if(!oNode.hasAttribute('customid')){
+                    oNode.setAttribute('customid',Math.uuid());
+                }
+                oNode.removeAttribute("dataid");
+            }
+            oNode.setAttribute('name', $G('orgname').value);
+            oNode.setAttribute('size',gSize);
+            columnValidation(oNode);//字段类型验证
+            if( gWidth != '' ) {
+                oNode.style.width = gWidth + 'px';
+                oNode.setAttribute('orgwidth',gWidth );
+            }
+            // Remove all options.
+            while ( oNode.options.length > 0 ){
+                oNode.remove(0) ;
+            }
+            for ( var i = 0 ; i < $G('orglist').options.length ; i++ ) {
+                var sText    = $G('orglist').options[i].value ;
+                if ( sText.length == 0 ) {
+                    sText = sText ;
+                }
+                var oOption = fnAddComboOption( oNode, sText, sText ) ;
+                if ( sText == $G('orgvalue').innerHTML ) {
+                    fnSetAttribute( oOption, 'selected', 'selected' ) ;
+                    oOption.selected = true ;
+                }
+            }
+            delete UE.plugins[thePlugins].editdom;
+        }
+    };
+</script>
+</body>
+</html>

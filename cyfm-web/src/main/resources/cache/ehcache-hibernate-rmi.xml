@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="hibernateCache">
+
+    <diskStore path="java.io.tmpdir/ehcache/cyfm/hibernate"/>
+
+    <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+                                     properties="peerDiscovery=automatic,multicastGroupAddress=230.0.0.1,multicastGroupPort=4446"/>
+    <cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"/>
+
+    <!-- DefaultCache setting. -->
+    <defaultCache maxEntriesLocalHeap="10000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
+                  overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+
+    <!-- Special objects setting. -->
+    <cache name="com.ppcxy.cyfm.sys.entity.user.User" maxEntriesLocalHeap="1000" eternal="true"
+           overflowToDisk="true" maxEntriesLocalDisk="10000">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+    <cache name="com.ppcxy.cyfm.sys.entity.user.User.roleList" maxEntriesLocalHeap="1000" eternal="true"
+           overflowToDisk="true" maxEntriesLocalDisk="10000">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+    <cache name="com.ppcxy.cyfm.sys.entity.team.Team" maxEntriesLocalHeap="100" eternal="true"
+           overflowToDisk="true" maxEntriesLocalDisk="1000">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+    <cache name="com.ppcxy.cyfm.sys.entity.permission.Role" maxEntriesLocalHeap="100"
+           eternal="true" overflowToDisk="true" maxEntriesLocalDisk="1000">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+
+    <cache
+            name="org.hibernate.cache.internal.StandardQueryCache"
+            maxEntriesLocalHeap="5000"
+            eternal="false"
+            timeToLiveSeconds="3600"
+            overflowToDisk="false">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+
+    <cache
+            name="org.hibernate.cache.spi.UpdateTimestampsCache"
+            maxEntriesLocalHeap="5000"
+            eternal="true"
+            overflowToDisk="true">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicatePuts=false,replicateUpdatesViaCopy=false"/>
+    </cache>
+
+</ehcache>

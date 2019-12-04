@@ -1,0 +1,173 @@
+/*edit form begin*/
+.box.editBox {
+    border: 1px solid #ccc !important;
+}
+
+.editBox .portlet-title {
+    padding: 0 !important;
+    margin: 0 10px 0 10px;
+    border-bottom: solid 1px #d0dee5 !important;
+    line-height: 35px;
+    position: relative;
+    height: 35px;
+}
+
+.editBox .portlet-title span {
+    color: #000;
+    font-weight: bold;
+    font-size: 14px;
+    border-bottom: solid 3px #66c9f3;
+    float: left;
+    position: absolute;
+    z-index: 100;
+    bottom: -1px;
+    padding: 0 3px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.toolbar-right {
+    float: right;
+}
+
+.tools {
+    clear: both;
+    height: 35px;
+    margin-bottom: 8px;
+}
+
+/*edit form end*/
+
+/*page begin*/
+.pagin {
+    position: relative;
+    margin-top: 10px;
+    padding: 0 12px 20px;
+    font-size: 12px
+}
+
+.pagin .blue {
+    color: #056dae;
+    font-style: normal;
+}
+
+.pagin .paginList {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.pagin .paginList .paginItem {
+    float: left;
+}
+
+.pagin .paginList .paginItem a {
+    float: left;
+    width: 31px;
+    height: 28px;
+    border: 1px solid #DDD;
+    text-align: center;
+    line-height: 30px;
+    border-left: none;
+    color: #3399d5;
+}
+
+.pagin .paginList .paginItem:first-child a {
+    border-left: 1px solid #DDD;
+}
+
+.pagin .paginList .paginItem:first-child a {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.pagin .paginList .paginItem:last-child a {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.pagin .paginList .paginItem.current, .pagin .paginList .paginItem.current a {
+    background: #f5f5f5;
+    cursor: default;
+    color: #737373;
+}
+
+.pagin .paginList .paginItem:hover {
+    background: #f5f5f5;
+}
+
+.pagin .paginList .paginItem.more, .pagin .paginList .paginItem.more a:hover {
+    cursor: default;
+}
+
+.pagin .paginList .paginItem.more:hover {
+    background: #FFF;
+}
+
+.pagin .paginList .paginItem.more a {
+    color: #737373;
+}
+
+.pagin .paginList .paginItem a.disabled {
+    color: #cccccc;
+    
+}
+.pagepre {
+    background: url(../images/pre.gif) no-repeat center center;
+    width: 31px;
+    height: 28px;
+}
+
+.pagenxt {
+    background: url(../images/next.gif) no-repeat center center;
+    width: 31px;
+    height: 28px;
+}
+
+.pagin li {
+    list-style: none;
+}
+
+.pagin li span {
+    display: block;
+}
+
+/* page end*/
+
+table.table-list th.check, table.table-list td.check {
+    text-align: center;
+}
+
+table.table-list .check input[type=checkbox] {
+    -webkit-appearance: none;
+    height: 16px;
+    clear: left;
+}
+
+div.form-group, div.control-group {
+    padding-bottom: 5px;
+}
+
+table#contentTable thead [data-sort] {
+    /*padding-right: 3px;*/
+    white-space: nowrap;
+}
+
+table#contentTable thead [data-sort] .resize-text{
+    padding-right: 20px;
+}
+table#contentTable thead [data-sort] .resize-text:after {
+    font-size: 12px;
+    opacity: 0.3;
+    content: "\e150";
+    font-family: 'Glyphicons Halflings';
+    position: absolute;
+    right: 3px;
+}
+
+table#contentTable thead [data-sort].sort-up .resize-text:after {
+    content: "\e155";
+}
+table#contentTable thead [data-sort].sort-down .resize-text:after {
+    content: "\e156";
+}

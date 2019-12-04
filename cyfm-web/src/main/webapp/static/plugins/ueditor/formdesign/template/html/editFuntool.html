@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>控件事件</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+
+    <link rel="stylesheet" href="main.style.css">
+    <link href="/static/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/select2/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/jquery-multi-select/css/multi-select.css"/>
+    <!-- BEGIN THEME STYLES -->
+    <link href="/static/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/artDialog/css/ui-dialog.css">
+</head>
+<body>
+<div class="content">
+    <button  id="sub" onclick="savefun()">保存</button><button onclick="javascript:history.back(-1);">返回</button>
+    <input type="hidden" id="funid">
+    <input type="hidden" id="selecttype">
+    <div id="hidevent" style="display: none;"></div>
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th><span>事件名称</span></th>
+            <th><span>事件类型</span> </th>
+        </tr>
+        <tr>
+            <td><input type="text" class="form-control" id="orgvalue"></td>
+            <td>
+                <select class="form-control input-medium select2me"  data-placeholder="事件名称" id="funtype" >
+                    <option value="click">
+                        点击
+                    </option>
+                    <option value="change">
+                        改变值
+                    </option>
+                    <option value="dblclick">
+                        双击
+                    </option>
+                    <option value="blur">
+                        失去焦点
+                    </option>
+                    <option value="focus">
+                        获得焦点
+                    </option>
+                    <option value="keydown">
+                        键盘按下
+                    </option>
+                    <option value="keyup">
+                        键盘弹起
+                    </option>
+                    <option value="onload">
+                        其他
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><span>事件选择</span> </th>
+            <th><span>事件内容</span></th>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <!--<label class="control-label col-md-3">Multi-Value Select</label>-->
+                    <div class="col-md-4">
+                        <select  id="stype"  class="form-control select2" multiple  style="height:110px;width:265px"  onclick="tchange(this);" onchange="cgg(this);">
+                            <optgroup label="自定义">
+                                <option value="0">自定义</option>
+                            </optgroup>
+                            <!--<optgroup label="基础公式">-->
+                                <!--<option>字段和</option>-->
+                            <!--</optgroup>-->
+                            <optgroup label="基础功能">
+                                <option value="1">动态计算</option>
+                                <option value="2">保存表单</option>
+                                <option value="3">数据带入</option>
+                                <option value="4">人员地址簿</option>
+                                <option value="5">部门职务地址簿</option>
+                                <!--<option value="6">自定义组地址簿</option>-->
+                                <option value="7">自定义验证</option>
+                                <!--<option>Detroit Lions</option>-->
+                                <!--<option>Green Bay Packers</option>-->
+                                <!--<option>Minnesota Vikings</option>-->
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <textarea id="funevent" style="width:225px;height:100px;" ></textarea>
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="/static/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/static/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script src="/static/global/plugins/bootbox/bootbox.min.js"></script>
+<script src="/static/global/plugins/artDialog/dialog-min.js"></script>
+<script type="text/javascript">
+    var tableId = window.parent.document.getElementById("tableId").value;
+
+    var dictid = null;
+    var customid = null;
+    var stype = null;
+    $(function(){
+        var url = window.location.search;
+        var Request = new Object();
+        if(url.indexOf("?")!=-1){
+            var str = url.substr(1);
+            strs = str.split("&");
+            for(var i=0;i<strs.length;i++){
+
+                Request[strs[i].split("=")[0]]=strs[i].split("=")[1];
+            }
+        }
+        if(Request['dictid']!=undefined){
+            dictid = Request['dictid'];
+        }
+        if(Request['customid']!=undefined){
+            customid = Request['customid'];
+        }
+        if(Request['funid']!=undefined){
+            //修改跳转赋值
+            $("#funid").val(Request['funid']);
+            $.ajax({
+                type: "GET",
+                url: "/formdesigner/formfun/editfun",
+                data:{funid:Request['funid']},
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    if(data!=undefined && data!=null){
+                        $("#orgvalue").val( data.name);
+                        $("#funevent").val(data.funevent);
+                        $("#hidevent").text(data.funevent);
+                        $("#funtype").val(data.funtype)
+                        $("#selecttype").val(data.type);
+                        $("#stype").val(data.type).change();
+                        if($("#stype").val()=="1"){
+                            $("#funevent").attr("disabled",true);
+                        }
+                    }
+                }
+            })
+        }else{
+            //新增控件事件
+            $("#stype").val("0").change();
+        }
+    })
+
+    function savefun(){
+        var reg=/^\w{8,12}$/;
+        var name = $("#orgvalue").val();
+        var funevent = $("#funevent").val();
+        var funtype = $("#funtype").val();
+        stype = $("#stype").val();
+        if(name==""){
+            bootbox.alert("事件名称不能为空");
+            return false;
+        }
+        var fun = {
+            funid:"",
+            name:name,
+            funevent:funevent,
+            funtype:funtype,
+            dictid:dictid,
+            customid:customid
+        };
+        var funid = $("#funid").val();
+        var formlinkid = top.$("#id").val();
+        /**添加保存**/
+        if(funid==null|| funid==undefined|| funid==""){
+            $.ajax({
+                type: "GET",
+                url: "/formdesigner/formfun/addfun?stype="+stype+"&formlinkid="+formlinkid,
+                data:fun,
+                dataType: 'json',
+                success: function (data) {
+                    bootbox.alert({
+                        buttons: {
+                            ok: {
+                                label: '确定',
+                                className: 'btn-myStyle'
+                            }
+                        },
+                        message: '添加成功',
+                        callback: function () {
+                            if(dictid==null || dictid == undefined || dictid == "" || dictid=="null"){
+                                location.href = "/static/global/plugins/ueditor/formdesign/funtool.html?customid="+customid;
+                            }else{
+                                location.href = "/static/global/plugins/ueditor/formdesign/funtool.html?dictid="+dictid;
+                            }
+                        },
+                    });
+                },
+                failure:function(data){
+                    bootbox.alert("失败");
+                }
+            })
+        }else{
+            /**修改保存**/
+            fun.funid = $("#funid").val();
+            $.ajax({
+                type: "GET",
+                url: "/formdesigner/formfun/editfunsave?stype="+stype+"&formlinkid="+formlinkid,
+                data:fun,
+                dataType: 'json',
+                success: function (data) {
+                    bootbox.alert({
+                        buttons: {
+                            ok: {
+                                label: '确定',
+                                className: 'btn-myStyle'
+                            }
+                        },
+                        message: '修改成功',
+                        callback: function () {
+                            if(dictid==null || dictid == undefined || dictid == "" || dictid=="null"){
+                                location.href = "/static/global/plugins/ueditor/formdesign/funtool.html?customid="+customid;
+                            }else{
+                                location.href = "/static/global/plugins/ueditor/formdesign/funtool.html?dictid="+dictid;
+                            }
+                        },
+                    });
+                },
+                failure:function(data){
+                    bootbox.alert("失败");
+                }
+            })
+        }
+    }
+    function tchange(obj) {
+        var ttype = $(obj).val();
+
+        if (ttype == 1) {
+            $("#funevent").attr("disabled", true);
+
+            $(parent.document.getElementsByName("queryDialog")).remove();
+            var queryDialog = top.dialog({
+                align: 'top',
+                zIndex: 9999,
+                id: "queryDialog",
+                url: "/formdesigner/formfun/querydialog?tableId=" + tableId + "&funevent=" + $("#funevent").val(),
+                padding: 25,
+                width: 650,
+                height: 350,
+                button: [
+                    {
+                        value: '确定',
+                        callback: function () {
+                            var columnChecked = parent.document.getElementsByName("queryDialog")[0].contentWindow.$("input[type='checkbox']:checked");
+                            var columns = "";
+                            columnChecked.each(function () {
+                                columns += $(this).val() + ",";
+                            });
+                            columns = columns.substring(0, columns.lastIndexOf(","));
+                            $("#funevent").val(columns);
+                            queryDialog.remove().close();
+                            return true;
+                        }
+                    },
+                    {
+                        value: '关闭',
+                        callback: function () {
+                            queryDialog.remove().close();
+                            return true;
+                        }
+                    }
+                ]
+            });
+            queryDialog.showModal(jQuery(".nav-tabs")[0]);
+            return;
+        }
+
+        $("#sub").attr("disabled", false);
+        $("#funevent").attr("disabled", false);
+
+        if (ttype == 2) {//保存表单
+            $("#funevent").val('/** 保存表单 **/\n$(this).parents("form").submit();');
+            return;
+        }
+        if (ttype == 3) {//保存表单
+            $("#funevent").val('/** 数据源带入数据,请用控件id替换url中的值  **/\nvar ddId="控件ID";\nvar searchData="{}";\n//searchData="[{"name":"字段名","oper":"匹配方式(eq like lt gt)","value":"值"}]";\nvar title="数据带入";\nvar width=800;\nvar height=450;\ntop.dialog({ title:title,width:width,height:height,data:window,zIndex: 6000,url:"/formdesigner/datadialog/dialog?id="+ddId+"&searchJsonData="+searchData}).show();');
+            return;
+        }
+
+    }
+    function cgg(obj){
+         if($("#stype").val()!=$("#selecttype").val()){
+             $("#funevent").val("");
+         }else{
+             $("#funevent").val($("#hidevent").text());
+         }
+
+//        $("#funevent").val("");
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>文本框</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+        label.option-block{
+            border: 1px solid #ccc;
+            text-align: center;
+            padding-right: 8px;
+            margin-right: 8px;
+        }
+
+        label.option-block input{
+            margin: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div ng-app="componentDesigner" ng-controller="designerCtrl">
+    <div class="col-xs-6">
+        <div class="col-xs-12">
+            <label for="name">控件名称：</label>
+            <input type="text" id="name" class="form-control" ng-model="component.name" placeholder="控件名称">
+        </div>
+        <div class="col-xs-12">
+            <label>最大长度：</label>
+            <input type="number" class="form-control" ng-model="component.maxLength" placeholder="最大长度">
+            <label>最小长度：</label>
+            <input type="number" class="form-control" ng-model="component.minLength" placeholder="最小长度">
+        </div>
+        <div class="col-xs-12">
+            <label for="name">验证类型：</label>
+            <div>
+                <label class="option-block"><input type="checkbox"  ng-model="component.validate.required">必填</label>
+                <label class="option-block"><input type="checkbox"  ng-model="component.readonly" value="readonly">只读</label>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <label for="cssWidth">宽：</label>
+            <input type="text" id="cssWidth" class="form-control" ng-model="component.cssWidth" placeholder="宽">
+        </div>
+        <div class="col-xs-6">
+            <label for="cssHeight">高：</label>
+            <input type="text" id="cssHeight" class="form-control" ng-model="component.cssHeight" placeholder="高">
+        </div>
+    </div>
+
+    <div class="col-xs-6">
+        <div class="col-xs-12">
+            <label for="dictId">绑定存储：</label>
+            <select type="text" id="dictId" class="form-control" ng-model="component.dictId" placeholder="绑定存储">
+                <option value="">非绑定</option>
+            </select>
+        </div>
+        <div class="col-xs-12">
+            <div>
+                <label for="customCss">自定义样式：</label>
+                <textarea id="customCss" class="form-control" rows="3" ng-model="component.customCss" placeholder="自定义样式"></textarea>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div>
+                <label for="customValidate">自定义验证：</label>
+                <textarea id="customValidate" class="form-control" rows="3" ng-model="component.customValidate" placeholder="自定义验证"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="col-xs-12">
+            <label for="calc">计算表达式：</label>
+            <textarea id="calc" class="form-control" rows="4" ng-model="component.calc" placeholder="计算表达式"></textarea>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../../dialogs/internal.js"></script>
+<script type="text/javascript">
+    var $currentComponent = null, component = {}, thePlugins = 'textarea';
+
+    var $text = $("<textarea plugins='" + thePlugins + "'/>");
+
+    dialog.oncancel = function () {
+        if (UE.plugins[thePlugins].editdom) {
+            delete UE.plugins[thePlugins].editdom;
+        }
+    };
+
+    dialog.onok = function () {
+
+        console.log(component)
+
+
+        $text.attr("data-id", component.id ? component.id : $cy.tools.uuid())
+
+        $text.attr("name", component.name);
+
+
+        $text.attr("maxlength", component.maxLength);
+        $text.attr("minlength", component.minLength);
+
+
+
+        $text.attr("data-validate", JSON.stringify(component.validate));
+        $text.attr("readonly", component.readonly);
+
+
+        $text.css({width: component.cssWidth, height: component.cssHeight});
+
+        $text.attr("data-style-custom", component.customCss);
+        $text.attr("data-validate-custom", component.customValidate);
+
+        $text.attr("data-dictid", component.dictId);
+        $text.attr("data-calc", component.calc);
+
+        if (!$currentComponent){
+            editor.execCommand('insertHtml', $text[0].outerHTML);
+        }
+
+        delete UE.plugins[thePlugins].editdom;
+    };
+
+
+    if (UE.plugins[thePlugins].editdom) {
+
+        $currentComponent = $(UE.plugins[thePlugins].editdom);
+
+        //以当前修改的空间为模板
+        $text = $currentComponent;
+
+        //获取控件名称
+        if ($text.attr('name')) {
+            component.name = $text.attr('name');
+        }
+
+
+        component.maxLength = parseInt($text.attr("maxlength"));
+        component.minLength = parseInt($text.attr("minlength"));
+
+
+        component.validate = $text.data("validate");
+        component.readonly = $text.attr("readonly");
+
+
+        component.dictId = $text.data("dictid");
+
+
+        //获取计算表达式
+        if ($currentComponent.data('calc')) {
+            component.calc = $text.data('calc');
+        }
+
+        component.customCss = $text.data('style')
+        component.customValidate = $text.data('validate-custom');
+
+        component.cssWidth = $text.css('width')
+        component.cssHeight = $text.css('height')
+        component.model = $text.data('model')
+
+    }
+
+
+</script>
+<script>
+    var app = angular.module('componentDesigner', []);
+
+    app.controller('designerCtrl', function ($scope, $http) {
+        $scope.component = component;
+    });
+
+</script>
+<!-- js end-->
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>上传附件</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+
+    <link rel="stylesheet" href="main.style.css">
+    <link href="/static/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/select2/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/jquery-multi-select/css/multi-select.css"/>
+    <!-- BEGIN THEME STYLES -->
+    <link href="/static/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/artDialog/css/ui-dialog.css">
+    <script type="text/javascript">
+
+        function createElement(type, name)
+        {
+            var element = null;
+            try {
+                element = document.createElement('<' + type + ' name="' + name + '"   >');
+            } catch (e) {}
+            if(element==null) {
+                element = document.createElement(type);
+                element.name = name;
+            }
+            return element;
+        }
+    </script>
+</head>
+<body>
+<div class="content">
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th><span>绑定存储</span></th>
+        </tr>
+        <tr>
+            <td>
+                <input type="hidden" id="isChange" >
+                <input type="hidden" id="dataType" ><!--字段类型 -->
+                <input type="hidden" id="nullable"><!--是否为空 -->
+                <input type="hidden" id="dataLength"><!--字段长度-->
+                <input type="hidden" id="dataid">
+                <select class="form-control input-medium select2me" data-placeholder="请选择绑定存储" id="orgname">
+
+                </select>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <th><span>附件列表：长&nbsp;宽&nbsp;字体大小</span> </th>
+        </tr>
+         <tr>
+             <td>
+                 <input id="orgwidth" type="text" value="200" class="span1" style="padding-left:5px" placeholder="auto"/>
+                 X
+                 <input id="orgheight" type="text" value="100" class="span1" placeholder="auto"/>
+                 &
+                 <input id="orgfontsize" type="text"  value="10" class=" span1" placeholder="auto"/> px
+
+             </td>
+         </tr>
+    </table>
+</div>
+
+<script src="/static/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/static/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script type="text/javascript" src="columnValidation.js"></script>
+<script src="/static/global/plugins/bootbox/bootbox.min.js"></script>
+<script src="/static/global/plugins/Math.uuid.js"></script>
+<script src="/static/global/plugins/artDialog/dialog-min.js"></script>
+<script type="text/javascript" src="../dialogs/internal.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+
+<script type="text/javascript">
+    var oNode = null,thePlugins = 'fileup';
+    var hideNode = null;
+    window.onload = function() {
+        var gName = null;
+        if( UE.plugins[thePlugins].editdom ){
+            oNode = UE.plugins[thePlugins].editdom;
+            gFontSize=oNode.getAttribute('orgfontsize'),
+                    gWidth=oNode.getAttribute('orgwidth'),
+                    gHeight=oNode.getAttribute('orgheight'),
+                    gName=oNode.getAttribute('gName');
+            $G('orgname').value = gName;
+            $G('orgfontsize').value = gFontSize;
+            $G('orgwidth').value = gWidth;
+            $G('orgheight').value = gHeight;
+//            $("#orgname").select2("val",gName);
+        }
+        var tableId = window.parent.document.getElementById("tableId").value;
+        $.ajax({
+            type: "GET",
+            url: "/formdesigner/formlink/genForm?tableId="+tableId,
+            dataType:'json',
+            success: function(data){
+                var selectHTML = "";
+                for(var i=0;i<data.length;i++){
+                    selectHTML += "<option value=\"" + data[i].field + "\"  dataid=\"" + data[i].id + "\"  dataType=\"" + data[i].type + "\" nullable=\"" + data[i].nullable + "\" dataLength=\"" + data[i].length + "\" >[" + data[i].title + "]" + data[i].field + "—类型：" + data[i].type + "-空：" + data[i].nullable + "</option>";
+                }
+                $("#orgname").append(selectHTML).val(gName).change();
+                var orgname = $("#orgname").val();
+                var dataLength = $("#orgname").find("option:selected").attr("dataLength");
+                $("#dataLength").val(dataLength);
+                $("#isChange").val(orgname);
+                //带回时候的数据类型
+                var dataType = $("#orgname").find("option:selected").attr("dataType");
+                $("#dataType").val(dataType);
+                //带回时候的数据是否为空
+                var nullable = $("#orgname").find("option:selected").attr("nullable");
+                $("#nullable").val(nullable);
+                //字段id
+                var dataid = $("#orgname").find("option:selected").attr("dataid");
+                $("#dataid").val(dataid);
+                $("#orgname").bind("change",function(){
+                    //类型
+                    dataType=$(this).context.selectedOptions.item(0).attributes.getNamedItem("dataType").value;
+                    $("#dataType").val(dataType);
+                    //是否为空
+                    nullable=$(this).context.selectedOptions.item(0).attributes.getNamedItem("nullable").value;
+                    $("#nullable").val(nullable);
+                    //字段长度
+                    dataLength=$(this).context.selectedOptions.item(0).attributes.getNamedItem("dataLength").value;
+                    $("#dataLength").val(dataLength);
+                    dataid=$(this).context.selectedOptions.item(0).attributes.getNamedItem("dataid").value;
+                    $("#dataid").val(dataid);
+
+                });
+            }
+        });
+        if ($().select2) {
+            $('.select2me').select2({
+                placeholder: "Select",
+                allowClear: true
+            });
+        }
+
+    }
+    dialog.oncancel = function () {
+        if( UE.plugins[thePlugins].editdom ) {
+            delete UE.plugins[thePlugins].editdom;
+        }
+    };
+
+
+    dialog.onok = function (){
+
+        if($("#dataType").val()!="clob"){
+            alert("请选择clob类型字段作为上传控件");
+            return false;
+        }
+
+        var gName=$("#orgname").val(),
+            nullable = $("#nullable").val(),
+//            gFontSize=$G('orgfontsize').value,
+////            gAlign=$G('orgalign').value,
+//            gWidth=$G('orgwidth').value,
+//            gHeight=$G('orgheight').value,
+            dataid=$G('dataid').value;
+
+
+        if( !oNode ) {
+            hideNode = createElement('input',gName);
+            hideNode.setAttribute('type','hidden');
+            oNode = createElement('input','none');
+            oNode.setAttribute('type','button');
+            oNode.setAttribute('plugins',thePlugins);
+            oNode.setAttribute('value','文件上传');
+            oNode.setAttribute('class','fileupload');
+            oNode.setAttribute('nullable', nullable);
+//            oNode.setAttribute('orgwidth',gWidth);
+            oNode.setAttribute('gName',gName);
+//            oNode.setAttribute('orgheight',gHeight);
+//            oNode.setAttribute('orgfontSize',gFontSize);
+//hideNode.outerHTML+
+            editor.execCommand('insertHtml',hideNode.outerHTML+oNode.outerHTML);
+
+
+        } else {
+            if(gName!=''){
+                oNode.setAttribute('gName',gName);
+                $(oNode).prev().attr("name",gName)
+            }
+//            if( gFontSize != '' ) {
+//                $("#orgfontsize").val(gFontSize);
+//                oNode.setAttribute('orgfontsize',gFontSize );
+//            }else{
+////                oNode.style.fontSize = '';
+//                oNode.setAttribute('orgfontsize', '');
+//            }
+//            if( gWidth != '' ) {
+//                $("#orgwidth").val(gWidth);
+//                oNode.setAttribute('orgwidth',gWidth );
+//            }else{
+////                oNode.style.width = '';
+//                oNode.setAttribute('orgwidth', '');
+//            }
+//            if( gHeight != '' ) {
+//                $("#orgheight").val(gHeight);
+//                oNode.setAttribute('orgheight',gHeight );
+//            }else{
+//                oNode.setAttribute('orgheight', '');
+//            }
+
+            delete UE.plugins[thePlugins].editdom;
+//            editor.execCommand('insertHtml',hideNode.outerHTML+oNode.outerHTML);
+        }
+    };
+</script>
+<!-- js end-->
+</body>
+</html>

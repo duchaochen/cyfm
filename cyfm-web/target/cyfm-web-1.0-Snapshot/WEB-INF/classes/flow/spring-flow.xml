@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- Activiti begin -->
+    <bean id="processEngineConfiguration" class="com.ppcxy.flow.ext.cfg.ProcessEngineConfigurationEx">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="transactionManager" ref="transactionManager"/>
+        <!--<property name="databaseSchema" value="newbpm"/>-->
+        <property name="databaseSchemaUpdate" value="true"/>
+        <property name="history" value="full"/>
+        <property name="processDefinitionCacheLimit" value="10"/>
+
+        <!-- mail -->
+        <property name="mailServerHost" value="localhost"/>
+        <property name="mailServerUsername" value="weep"/>
+        <property name="mailServerPassword" value="000000"/>
+        <property name="mailServerPort" value="2025"/>
+
+        <!-- UUID作为主键生成策略
+        <property name="idGenerator" ref="uuidGenerator" />
+        -->
+
+        <!-- 生成流程图的字体 -->
+        <property name="activityFontName" value="${diagram.flowFontName}"/>
+        <property name="labelFontName" value="${diagram.labelFontName}"/>
+
+        <!-- 缓存支持
+        <property name="processDefinitionCache">
+            <bean class="me.kafeitu.demo.activiti.util.cache.DistributedCache" />
+        </property>-->
+
+        <!-- 自动部署 -->
+        <property name="deploymentResources">
+            <list>
+                <value>classpath*:/flow/bpmn2/*</value>
+            </list>
+        </property>
+
+        <!-- JPA -->
+        <property name="jpaEntityManagerFactory" ref="entityManagerFactory"/>
+        <property name="jpaHandleTransaction" value="false"/>
+        <property name="jpaCloseEntityManager" value="false"/>
+
+        <property name="startEngineEventListeners">
+            <list>
+                <!-- 添加启动监听 -->
+                <!-- 加载自定义activity -->
+            </list>
+        </property>
+        <!-- 自定义监听事件 -->
+        <property name="eventListeners">
+            <list>
+
+            </list>
+        </property>
+    </bean>
+
+    <bean id="processEngine" class="org.flowable.spring.ProcessEngineFactoryBean">
+        <property name="processEngineConfiguration" ref="processEngineConfiguration"/>
+    </bean>
+
+    <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"/>
+    <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService"/>
+    <bean id="formService" factory-bean="processEngine" factory-method="getFormService"/>
+    <bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService"/>
+    <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService"/>
+    <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>
+    <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService"/>
+</beans>

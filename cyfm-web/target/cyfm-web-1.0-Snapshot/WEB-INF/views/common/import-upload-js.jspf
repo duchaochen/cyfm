@@ -1,0 +1,60 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%-- The jQuery UI widget factory, can be omitted if jQuery UI is already included --%>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/vendor/jquery.ui.widget.js"></script>
+<%-- The Templates plugin is included to render the upload/download listings --%>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/tmpl.min.js"></script>
+<%-- The Load Image plugin is included for the preview images and image resizing functionality --%>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/load-image.min.js"></script>
+<%-- The Canvas to Blob plugin is included for image resizing functionality --%>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/canvas-to-blob.min.js"></script>
+<%-- The Iframe Transport is required for browsers without support for XHR file uploads --%>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/jquery.iframe-transport.js"></script>
+<%-- The basic File Upload plugin --%>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/jquery.fileupload.js"></script>
+<%-- The File Upload file processing plugin --%>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/jquery.fileupload-fp.js"></script>
+<%-- The File Upload user interface plugin --%>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/jquery.fileupload-ui.js?1"></script>
+<%-- The localization script --%>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/locale.js"></script>
+<%-- The main application script --%>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/main.js"></script>
+<script type="text/javascript" src="${ctx}/static/plugins/upload/js/cors/jquery.xdr-transport.js"></script>
+
+
+<script type="text/javascript">
+    $.browser = {};
+    $.browser.mozilla = /firefox/.test(navigator.userAgent.toLowerCase());
+    $.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
+    $.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
+    $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+
+    _ctx = "${ctx}";
+</script>
+<script type="text/javascript">
+    function preview(fileTypes,url,title){
+        var suffix="bmp|jpg|jpeg|gif|png";
+        var reg="^.*?\.("+suffix+")$";
+        if (reg.match(fileTypes.toLowerCase())){
+
+            var previewJson = {
+                "title": "", //相册标题
+                "id": 123, //相册id
+                "start": 0, //初始显示的图片序号，默认0
+                "data": [   //相册包含的图片，数组格式
+                    {
+                        "alt": title,
+                        "pid": '', //图片id
+                        "src": url, //原图地址
+                        "thumb": url //缩略图地址
+                    }
+                ]
+            };
+            layer.photos({
+                photos: previewJson
+                ,anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            });
+        }
+    }
+
+</script>

@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>标签</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+
+    <link rel="stylesheet" href="main.style.css">
+    <link href="/static/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/select2/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/jquery-multi-select/css/multi-select.css"/>
+    <!-- BEGIN THEME STYLES -->
+    <link href="/static/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/artDialog/css/ui-dialog.css">
+    <script type="text/javascript">
+
+        function createElement(type, name) {
+            var element = null;
+            try {
+                element = document.createElement('<' + type + ' name="' + name + '">');
+            } catch (e) {
+            }
+            if (element == null) {
+                element = document.createElement(type);
+                element.name = name;
+            }
+            return element;
+        }
+    </script>
+</head>
+<body>
+<div class="content">
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th><span>控件绑定类型</span></th>
+            <th><span>绑定存储</span></th>
+        </tr>
+        <tr>
+            <td>
+                <input type="hidden" id="isChange">
+                <input type="hidden" id="dataType"><!--字段类型 -->
+                <input type="hidden" id="nullable"><!--是否为空 -->
+                <input type="hidden" id="dataLength"><!--字段长度-->
+                <input type="hidden" id="dataid">
+                <select id="orgtype">
+                    <option value="0">绑定字段控件</option>
+                    <option value="1">普通文本控件</option>
+                </select>
+            </td>
+            <td>
+                <select class="form-control input-medium select2me" data-placeholder="请选择绑定存储" id="orgname">
+
+                </select>
+            </td>
+        </tr>
+
+
+        <tr>
+            <th><span>&nbsp;&nbsp;&nbsp;&nbsp;长&nbsp;&nbsp;X&nbsp;&nbsp;宽&nbsp;&nbsp;&&nbsp;&nbsp;</span></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>
+                <input id="orgwidth" type="text" value="300" class="span1" style="padding-left:5px" placeholder="auto"/>
+                X
+                <input id="orgheight" type="text" value="95" class="span1" placeholder="auto"/>
+                px
+
+            </td>
+            <td>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<script src="/static/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/static/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script type="text/javascript" src="columnValidation.js"></script>
+<script src="/static/global/plugins/bootbox/bootbox.min.js"></script>
+<script src="/static/global/plugins/Math.uuid.js"></script>
+<script src="/static/global/plugins/artDialog/dialog-min.js"></script>
+<script type="text/javascript" src="../dialogs/internal.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+<script type="text/javascript">
+    var oNode = null, thePlugins = 'signature';
+    window.onload = function () {
+        $("#orgtype").bind("change", function () {
+            if ($(this).val() == "1") {
+                //禁用字段下拉框
+                $("#orgname").prop("disabled", true);
+                $("#orgname").select2("val", null);
+            } else {
+                $("#orgname").prop("disabled", false);
+            }
+
+        })
+        if ($("#orgtype").val() == 1) {
+            $("#orgname").prop("disabled", true);
+            $("#orgname").select2("val", null);
+        }
+
+        var gName = null;
+        if (UE.plugins[thePlugins].editdom) {
+            oNode = UE.plugins[thePlugins].editdom;
+
+            if (oNode.getAttribute('name') != null) {
+                gName = oNode.getAttribute('name').replace(/&quot;/g, "\"");
+            }
+            gWidth = oNode.getAttribute('orgwidth'),
+                gHeight = oNode.getAttribute('orgheight'),
+                gType = oNode.getAttribute('orgtype');
+
+            gName = gName == null ? '' : gName;
+
+            $G('orgname').value = gName;
+            $G('orgwidth').value = gWidth;
+            $G('orgheight').value = gHeight;
+            $G('orgtype').value = gType;
+
+            if ($("#orgtype").val() == 1) {
+                $("#orgname").prop("disabled", true);
+                $("#orgname").select2("val", null);
+            }
+        }
+
+        var tableId = window.parent.document.getElementById("tableId").value;
+        $.ajax({
+            type: "GET",
+            url: "/formdesigner/formlink/genForm?tableId=" + tableId,
+            dataType: 'json',
+            success: function (data) {
+                var selectHTML = "";
+                for (var i = 0; i < data.length; i++) {
+                    selectHTML += "<option value=\"" + data[i].field + "\" dataValue=\"" + (data[i].defaultValue==undefined?"":data[i].defaultValue.replace(/"|\&quot;/g,"'''")) + "\" dataid=\"" + data[i].id + "\"  dataType=\"" + data[i].type + "\" nullable=\"" + data[i].nullable + "\" dataLength=\"" + data[i].length + "\" >[" + data[i].title + "]" + data[i].field + "—类型：" + data[i].type + "-空：" + data[i].nullable + "</option>";
+                }
+                $("#orgname").append(selectHTML).val(gName).change();
+                var orgname = $("#orgname").val();
+                var dataLength = $("#orgname").find("option:selected").attr("dataLength");
+                $("#dataLength").val(dataLength);
+                $("#isChange").val(orgname);
+                //带回时候的数据类型
+                var dataType = $("#orgname").find("option:selected").attr("dataType");
+                $("#dataType").val(dataType);
+                //带回时候的数据是否为空
+                var nullable = $("#orgname").find("option:selected").attr("nullable");
+                $("#nullable").val(nullable);
+                //字段id
+                var dataid = $("#orgname").find("option:selected").attr("dataid");
+                $("#dataid").val(dataid);
+                //默认值
+                var orgsrc = $("#orgname").find("option:selected").attr("dataValue");
+                if (orgsrc != undefined && orgsrc != "undefined") {
+                    $("#orgsrc").val(orgsrc.replace(/'''/g,"\""));
+                }
+                $("#orgname").bind("change", function () {
+                    $("#orgsrc").val("");
+                    //默认值
+                    orgsrc = $(this).context.selectedOptions.item(0).attributes.getNamedItem("dataValue").value;
+                    if (orgsrc != undefined && orgsrc != "undefined") {
+
+                        $("#orgsrc").val(orgsrc.replace(/'''/g,"\""));
+
+                    }
+                    //类型
+                    dataType = $(this).context.selectedOptions.item(0).attributes.getNamedItem("dataType").value;
+                    $("#dataType").val(dataType);
+                    //是否为空
+                    nullable = $(this).context.selectedOptions.item(0).attributes.getNamedItem("nullable").value;
+                    $("#nullable").val(nullable);
+                    //字段长度
+                    dataLength = $(this).context.selectedOptions.item(0).attributes.getNamedItem("dataLength").value;
+                    $("#dataLength").val(dataLength);
+                    dataid = $(this).context.selectedOptions.item(0).attributes.getNamedItem("dataid").value;
+                    $("#dataid").val(dataid);
+
+                });
+            }
+        });
+        if ($().select2) {
+            $('.select2me').select2({
+                placeholder: "Select",
+                allowClear: true
+            });
+        }
+    }
+
+    dialog.oncancel = function () {
+        if (UE.plugins[thePlugins].editdom) {
+            delete UE.plugins[thePlugins].editdom;
+        }
+    };
+
+    dialog.onok = function () {
+        if ($G('orgname').value == '') {
+            alert('必须绑定一个存储字段');
+            return false;
+        }
+        var result = "";
+        if (oNode) {
+            result = oNode.outerHTML;
+        } else {
+            var $newImg = $("<img></img>");
+
+
+            var dataid = $G('dataid').value;
+            var orgname = $G('orgname').value;
+            var orgwidth = $G('orgwidth').value;
+            var orgheight = $G('orgheight').value;
+            var orgtype = $G('orgtype').value;
+            var nullable = $G('nullable').value;
+
+            console.log('dataid' + dataid)
+            console.log('orgname' + orgname)
+
+            $newImg.attr("src", "/static/images/qz.png");
+            $newImg.attr("dataid", dataid);
+            $newImg.attr("id", orgname);
+            $newImg.attr("name", orgname);
+            $newImg.attr("orgname", orgname);
+            $newImg.attr("orgwidth", orgwidth);
+            $newImg.attr("orgheight", orgheight);
+            $newImg.attr("orgtype", orgtype);
+            $newImg.attr("designerPlugins", thePlugins);
+            $newImg.attr("nullable", nullable);
+            $newImg.css({
+                width: orgwidth + 'px',
+                height: orgheight + 'px'
+            });
+
+            result = $newImg[0].outerHTML;
+        }
+
+        editor.execCommand('insertHtml', result);
+        delete UE.plugins[thePlugins].editdom;
+    }
+</script>
+<!-- js end-->
+</body>
+</html>

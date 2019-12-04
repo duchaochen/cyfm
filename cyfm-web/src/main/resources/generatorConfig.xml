@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="application.properties"></properties>
+
+    <!--指定特定数据库的jdbc驱动jar包的位置 -->
+    <context id="default" targetRuntime="MyBatis3">
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+
+        <jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}" userId="${jdbc.username}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.ppcxy.cyfm.mybatisgen.entity" targetProject="src/main/java">
+            <property name="constructorBased" value="true"/>
+            <property name="enableSubPackages" value="true"/>
+            <property name="immutable" value="true"/>
+            <property name="rootClass" value="com.ppcxy.common.entity.IdEntity"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.ppcxy.cyfm.mybatisgen.domain" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+
+        <javaClientGenerator targetPackage="com.ppcxy.cyfm.mybatisgen.dao" targetProject="src/main/java"
+                             type="MIXEDMAPPER">
+            <property name="enableSubPackages" value=""/>
+            <property name="exampleMethodVisibility" value=""/>
+            <property name="methodNameCalculator" value=""/>
+            <property name="rootInterface" value=""/>
+        </javaClientGenerator>
+
+
+        <!--对应数据库表名 -->
+        <table tableName="cy_sys_resource" domainObjectName="Resource" enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!--<ignoreColumn column="ID" delimitedColumnName="false"/>-->
+        </table>
+    </context>
+</generatorConfiguration>

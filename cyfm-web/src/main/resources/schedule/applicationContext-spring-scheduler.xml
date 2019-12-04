@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+       default-lazy-init="true">
+
+    <description>使用Spring的 Scheduled的定时任务配置</description>
+
+    <!-- namespace 方式 的便捷版 -->
+    <task:scheduler id="springScheduler" pool-size="10"/>
+
+    <task:executor id="executor" pool-size="10"/>
+    <task:annotation-driven scheduler="springScheduler" executor="executor" proxy-target-class="true"/>
+
+    <beans profile="test">
+        <!--演示的Spring定时任务使用方式-->
+        <task:scheduled-tasks scheduler="springScheduler">
+            <!-- timer -->
+            <task:scheduled ref="userCountScanner" method="executeBySpringTimerByXml" fixed-rate="180000"/>
+            <!-- cron -->
+            <task:scheduled ref="userCountScanner" method="executeBySpringCronByXml" cron="0 15 9-17 * * MON-FRI"/>
+        </task:scheduled-tasks>
+
+        <!-- coding 方式的加強版 -->
+        <bean id="springCronJob" class="com.ppcxy.cyfm.showcase.demos.schedule.SpringCronJob" lazy-init="false">
+            <property name="cronExpression" value="0 15 9-17 * * MON-FRI"/>
+            <property name="shutdownTimeout" value="20"/>
+        </bean>
+    </beans>
+</beans>

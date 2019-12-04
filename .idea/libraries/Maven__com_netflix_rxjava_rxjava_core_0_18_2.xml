@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.netflix.rxjava:rxjava-core:0.18.2">
+    <CLASSES>
+      <root url="jar://D:/repository/com/netflix/rxjava/rxjava-core/0.18.2/rxjava-core-0.18.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository/com/netflix/rxjava/rxjava-core/0.18.2/rxjava-core-0.18.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository/com/netflix/rxjava/rxjava-core/0.18.2/rxjava-core-0.18.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

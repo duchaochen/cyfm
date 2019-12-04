@@ -1,0 +1,550 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>标签</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+
+    <link rel="stylesheet" href="main.style.css">
+    <link href="/static/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/select2/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/jquery-multi-select/css/multi-select.css"/>
+    <!-- BEGIN THEME STYLES -->
+    <link href="/static/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/artDialog/css/ui-dialog.css">
+    <script type="text/javascript">
+
+        function createElement(type, name)
+        {
+            var element = null;
+            try {
+                element = document.createElement('<'+type+' name="'+name+'">');
+            } catch (e) {}
+            if(element==null) {
+                element = document.createElement(type);
+                element.name = name;
+            }
+            return element;
+        }
+    </script>
+</head>
+<body>
+<div class="content">
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th><span>控件绑定类型</span></th>
+            <th><span>绑定存储</span></th>
+        </tr>
+        <tr>
+            <td>
+                <input type="hidden" id="isChange" >
+                <input type="hidden" id="dataType" ><!--字段类型 -->
+                <input type="hidden" id="nullable"><!--是否为空 -->
+                <input type="hidden" id="dataLength"><!--字段长度-->
+                <input type="hidden" id="dataid">
+                <select id="orgtype">
+                    <option value="0">绑定字段控件</option>
+                    <option value="1">普通文本控件</option>
+                </select>
+            </td>
+            <td>
+                <select class="form-control input-medium select2me" data-placeholder="请选择绑定存储" id="orgname">
+
+                </select>
+            </td>
+        </tr>
+
+
+        <tr>
+            <th><span>&nbsp;&nbsp;&nbsp;&nbsp;长&nbsp;&nbsp;X&nbsp;&nbsp;宽&nbsp;&nbsp;&&nbsp;&nbsp;字体大小</span> </th>
+            <th><span>控件展示类型</span> </th>
+        </tr>
+        <tr>
+            <td>
+                <input id="orgwidth" type="text" value="200" class="span1" style="padding-left:5px" placeholder="auto"/>
+                X
+                <input id="orgheight" type="text" value="" class="span1" placeholder="auto"/>
+                &
+                <input id="orgfontsize" type="text"  value="" class=" span1" placeholder="auto"/> px
+
+            </td>
+            <td>
+                <select class="form-control input-medium select2me"  data-placeholder="请选择控件展现类型" id="labelType" >
+                    <option value="text">普通文本</option>
+                    <optgroup label="小数">
+                        <option value="oneDecimal">一位小数</option>
+                        <option value="twoDecimal">两位小数</option>
+                        <option value="threeDecimal">三位小数</option>
+                    </optgroup>
+                    <option value="zeroDecimal">整数</option>
+                    <option value="YYYY-MM-DD hh:mm:ss">日期时间</option>
+                    <option value="YYYY-MM-DD">日期</option>
+                    <option value="currency">货币</option>
+                    <option value="percentage">百分比</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th><span>默认值</span> </th>
+            <th><span></span> </th>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <!--<input type="text" class="form-control formula" id="orgvalue"  onclick="formula();" style="width:90%">-->
+                <textarea class="form-control" id="orgvalue" onclick="formula(window.parent.document.getElementById('processBusinessId').value);" style="width:90%"></textarea>
+            </td>
+        </tr>
+
+
+    </table>
+</div>
+
+<script src="/static/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/static/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script type="text/javascript" src="columnValidation.js"></script>
+<script src="/static/global/plugins/bootbox/bootbox.min.js"></script>
+<script src="/static/global/plugins/Math.uuid.js"></script>
+<script src="/static/global/plugins/artDialog/dialog-min.js"></script>
+<script type="text/javascript" src="../dialogs/internal.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+<script type="text/javascript">
+    function formula(processBusinessId,callback){
+        var param ={};
+        param.callback=callback;
+        param.defaultValue = $("#orgvalue").val();
+        
+        var requestUrl = "/formula/main?processBusinessId=";
+        if(processBusinessId){
+            $("#processBusinessId").val(processBusinessId)
+            requestUrl+=processBusinessId;
+        }
+
+        $(top.document.getElementsByName("formulaDialog")).remove();
+        jQuery("iframe[name=formulaDialog]:hidden").remove();
+        var formulaDialog = top.dialog({
+            align: 'top',
+            zIndex:10000,
+            id:"formulaDialog",
+            url:requestUrl,
+            data:param,
+            padding:25,
+            width:800,
+            height:500
+        });
+        formulaDialog.showModal(jQuery(".nav-tabs")[0]);
+        top.$("iframe[name='formulaDialog']")[0].contentWindow.formulaDialogCallback=function(v){
+            $("#orgvalue").val(v);
+        };
+    }
+</script>
+
+<script type="text/javascript">
+    var oNode = null,thePlugins = 'label';
+    window.onload = function() {
+        $("#orgtype").bind("change",function(){
+            if( $(this).val()=="1"){
+                //禁用字段下拉框
+                $("#orgname").prop("disabled",true);
+                $("#orgname").select2("val", null);
+            }else{
+                $("#orgname").prop("disabled",false);
+            }
+
+        })
+        if($("#orgtype").val()==1){
+            $("#orgname").prop("disabled",true);
+            $("#orgname").select2("val", null);
+        }
+        var gName = null;
+        if( UE.plugins[thePlugins].editdom ){
+            oNode = UE.plugins[thePlugins].editdom;
+            var gValue = '';
+            if(oNode.getAttribute('gValue'))
+                gValue = oNode.getAttribute('gValue').replace(/&quot;/g,"\"");
+            if(oNode.getAttribute('name')!=null){
+                gName=oNode.getAttribute('name').replace(/&quot;/g,"\"");
+            }
+            gFontSize=oNode.getAttribute('orgfontsize'),
+                    gWidth=oNode.getAttribute('orgwidth'),
+                    gHeight=oNode.getAttribute('orgheight'),
+                    gType=oNode.getAttribute('orgtype');
+            gValue = gValue==null ? '' : gValue;
+            gName = gName==null ? '' : gName;
+            $G('orgvalue').value = gValue;
+            $G('orgname').value = gName;
+            $G('orgfontsize').value = gFontSize;
+            $G('orgwidth').value = gWidth;
+            $G('orgheight').value = gHeight;
+            $G('orgtype').value = gType;
+            if($("#orgtype").val()==1){
+                $("#orgname").prop("disabled",true);
+                $("#orgname").select2("val", null);
+            }
+            var step = oNode.getAttribute('step');
+            if(step!=null){
+                if(step=="0"){
+                    $("#labelType").val("zeroDecimal");
+                }
+                if(step=="0.1"){
+                    $("#labelType").val("oneDecimal");
+                }
+                if(step=="0.01"){
+                    $("#labelType").val("twoDecimal");
+                }
+                if(step=="0.001"){
+                    $("#labelType").val("threeDecimal");
+                }
+            }
+
+            if(oNode.getAttribute('currency')){
+                $("#labelType").val("currency");
+            }
+            if(oNode.getAttribute('data-format')){
+                $("#labelType").val(oNode.getAttribute('data-format'));
+            }
+            if(oNode.getAttribute("percentage")=="true"){
+                $("#labelType").val("percentage");
+            }
+
+
+        }
+
+        var tableId = window.parent.document.getElementById("tableId").value;
+        $.ajax({
+            type: "GET",
+            url: "/formdesigner/formlink/genForm?tableId="+tableId,
+            dataType:'json',
+            success: function(data){
+                var selectHTML = "";
+                for(var i=0;i<data.length;i++){
+                    selectHTML += "<option value=\"" + data[i].field + "\" dataValue=\"" + (data[i].defaultValue==undefined?"":data[i].defaultValue.replace(/"|\&quot;/g,"'''")) + "\" dataid=\"" + data[i].id + "\"  dataType=\"" + data[i].type + "\" nullable=\"" + data[i].nullable + "\" dataLength=\"" + data[i].length + "\" >[" + data[i].title + "]" + data[i].field + "—类型：" + data[i].type + "-空：" + data[i].nullable + "</option>";
+                }
+                $("#orgname").append(selectHTML).val(gName).change();
+                var orgname = $("#orgname").val();
+                var dataLength = $("#orgname").find("option:selected").attr("dataLength");
+                $("#dataLength").val(dataLength);
+                $("#isChange").val(orgname);
+                //带回时候的数据类型
+                var dataType = $("#orgname").find("option:selected").attr("dataType");
+                $("#dataType").val(dataType);
+                //带回时候的数据是否为空
+                var nullable = $("#orgname").find("option:selected").attr("nullable");
+                $("#nullable").val(nullable);
+                //字段id
+                var dataid = $("#orgname").find("option:selected").attr("dataid");
+                $("#dataid").val(dataid);
+                //默认值
+                var orgvalue = $("#orgname").find("option:selected").attr("dataValue");
+                if(orgvalue!=undefined && orgvalue!="undefined"){
+                    $("#orgvalue").val(orgvalue.replace(/'''/g,"\""));
+                }
+                $("#orgname").bind("change",function(){
+                    $("#orgvalue").val("");
+                    //默认值
+                    orgvalue = $(this).context.selectedOptions.item(0).attributes.getNamedItem("dataValue").value;
+                    if(orgvalue!=undefined && orgvalue!="undefined"){
+
+                        $("#orgvalue").val(orgvalue.replace(/'''/g,"\""));
+
+                    }
+                    //类型
+                    dataType=$(this).context.selectedOptions.item(0).attributes.getNamedItem("dataType").value;
+                    $("#dataType").val(dataType);
+                    //是否为空
+                    nullable=$(this).context.selectedOptions.item(0).attributes.getNamedItem("nullable").value;
+                    $("#nullable").val(nullable);
+                    //字段长度
+                    dataLength=$(this).context.selectedOptions.item(0).attributes.getNamedItem("dataLength").value;
+                    $("#dataLength").val(dataLength);
+                    dataid=$(this).context.selectedOptions.item(0).attributes.getNamedItem("dataid").value;
+                    $("#dataid").val(dataid);
+
+                });
+            }
+        });
+        if ($().select2) {
+            $('.select2me').select2({
+                placeholder: "Select",
+                allowClear: true
+            });
+        }
+    }
+    dialog.oncancel = function () {
+        if( UE.plugins[thePlugins].editdom ) {
+            delete UE.plugins[thePlugins].editdom;
+        }
+    };
+
+    dialog.onok = function (){
+
+        if($G('orgname').value=='' && $("#orgtype").val()==0){
+            bootbox.alert('请选择绑定存储');
+            return false;
+        }
+        var gValue=$G('orgvalue').value.replace(/\"/g,"&quot;");
+        var gName=$G('orgname').value.replace(/\"/g,"&quot;");
+        gLabel = "";
+        if (gName!=''){
+            gLabel=$($G('orgname')).find("option:selected").text().match(/\[(.+?)]/)[1];
+        }
+        var gFontSize=$G('orgfontsize').value,
+        //gAlign=$G('orgalign').value,
+        gWidth=$G('orgwidth').value,
+        gHeight=$G('orgheight').value,
+        gType=$G('orgtype').value;
+        dataid=$G('dataid').value;
+        var labelType = $("#labelType").val();
+        var percentage = "";
+        if( !oNode ) {
+//            try {
+            oNode = createElement('label','none');
+            if (gLabel && gLabel){
+                oNode.innerHTML =  gLabel+"：<strong>" + gName+"</strong>";
+            }else{
+                oNode.innerHTML =  "标签：<strong>" + gValue+"</strong>";
+            }
+//                oNode.setAttribute('value',gValue);  //默认值设置成值
+            oNode.setAttribute('plugins',thePlugins);
+            if(gType==1){
+                if(!oNode.hasAttribute('customid')){
+                    oNode.setAttribute('customid',Math.uuid());
+                }
+            }else{
+//                    oNode.removeAttribute("customid");
+                oNode.setAttribute('name',gName);
+                oNode.setAttribute('dataid',dataid);
+                columnValidation(oNode);//字段类型验证
+            }
+
+            if(labelType=="YYYY-MM-DD hh:mm:ss"){
+                $(oNode).addClass("laydate-icon");
+                oNode.setAttribute('istime',"true");
+                oNode.setAttribute('data-format',labelType);
+            }else if(labelType=="YYYY-MM-DD"){
+                $(oNode).addClass("laydate-icon");
+                oNode.setAttribute('istime',"false");
+                oNode.setAttribute('data-format',labelType);
+            }else{
+                $(oNode).removeClass("laydate-icon");
+                oNode.removeAttribute('istime');
+            }
+
+            if(labelType=="oneDecimal"){
+                oNode.setAttribute("type","number");
+                oNode.setAttribute("step","0.1");
+//                oNode.setAttribute("max","99.9");
+            }else if(labelType=="twoDecimal"){
+                oNode.setAttribute("type","number");
+                oNode.setAttribute("step","0.01");
+//                oNode.setAttribute("max","99.99");
+            }else if(labelType=="threeDecimal"){
+                oNode.setAttribute("type","number");
+                oNode.setAttribute("step","0.001");
+//                oNode.setAttribute("max","99.999");
+            }else if(labelType=="zeroDecimal"){
+                oNode.setAttribute("type","number");
+                oNode.removeAttribute("step");
+            }else if(labelType=="currency"){
+                oNode.setAttribute("type","number");
+                oNode.setAttribute("currency","true");
+                oNode.removeAttribute("step");
+            }else{
+                oNode.setAttribute("type","text");
+                oNode.removeAttribute("step");
+                oNode.removeAttribute("currency");
+            }
+
+            if(labelType=="text"){
+                oNode.setAttribute("type","text");
+            }else if(labelType=="percentage"){
+                oNode.setAttribute("percentage","true");
+                percentage = "<var>%</var>";
+            }else{
+//                percentage = "";
+                oNode.removeAttribute("percentage");
+            }
+
+            if( gFontSize != '' ) {
+                oNode.style.fontSize = gFontSize + 'px';
+                //style += 'font-size:' + gFontSize + 'px;';
+                oNode.setAttribute('orgfontsize',gFontSize );
+            }
+            if( gWidth != '' ) {
+                oNode.style.width = gWidth+ 'px';
+                //style += 'width:' + gWidth + 'px;';
+                oNode.setAttribute('orgwidth',gWidth );
+            }
+            if( gHeight != '' ) {
+                oNode.style.height = gHeight+ 'px';
+                oNode.setAttribute('orgheight',gHeight );
+            }
+            if( gType != '' ) {
+                oNode.setAttribute('orgtype',gType );
+            }
+            if(gValue !=''){
+                oNode.setAttribute('gValue',gValue);
+                $.ajax({
+                    type: "POST",
+                    url: "/formdesigner/dict/saveDefaultValue?id="+dataid ,
+                    data: {"defaultValue":gValue},
+                    dataType: 'json',
+                    success: function (data) {
+                        bootbox.alert("默认值修改成功");
+                    }
+                })
+            }
+
+            editor.execCommand('insertHtml',"{|-"+(oNode.outerHTML+percentage)+"-|}");
+        } else {
+            if( gType != '' ) {
+                oNode.setAttribute('orgtype',gType );
+            }else{
+                oNode.setAttribute('orgtype', '');
+            }
+            if(gType==0){
+                oNode.setAttribute('name', gName);
+                oNode.setAttribute('dataid',dataid);
+//                oNode.removeAttribute("customid");
+                columnValidation(oNode);//字段类型验证
+
+            }else{
+                if(!oNode.hasAttribute('customid')){
+                    oNode.setAttribute('customid',Math.uuid());
+                }
+                oNode.removeAttribute("name");
+                oNode.removeAttribute("dataid");
+                oNode.removeAttribute("class");
+            }
+
+            if(labelType!=''){
+                if(labelType=="YYYY-MM-DD hh:mm:ss"){
+                    $(oNode).addClass("laydate-icon");
+                    oNode.setAttribute('istime',"true");
+                    oNode.setAttribute('data-format',labelType);
+                }else if(labelType=="YYYY-MM-DD"){
+                    $(oNode).addClass("laydate-icon");
+                    oNode.setAttribute('istime',"false");
+                    oNode.setAttribute('data-format',labelType);
+                }else{
+                    $(oNode).removeClass("laydate-icon");
+                    oNode.removeAttribute('istime');
+                }
+
+                if(labelType=="oneDecimal"){
+                    oNode.setAttribute("type","number");
+                    oNode.setAttribute("step","0.1");
+//                    oNode.setAttribute("max","99.9");
+                }else if(labelType=="twoDecimal"){
+                    oNode.setAttribute("type","number");
+                    oNode.setAttribute("step","0.01");
+//                    oNode.setAttribute("max","99.99");
+                }else if(labelType=="threeDecimal"){
+                    oNode.setAttribute("type","number");
+                    oNode.setAttribute("step","0.001");
+//                    oNode.setAttribute("max","99.999");
+                }else if(labelType=="zeroDecimal"){
+                    oNode.setAttribute("type","number");
+                    oNode.removeAttribute("step");
+                }else if(labelType=="currency"){
+                    oNode.setAttribute("type","number");
+                    oNode.setAttribute("currency","true");
+                    oNode.removeAttribute("step");
+                }else{
+                    oNode.setAttribute("type","text");
+                    oNode.removeAttribute("step");
+                    oNode.removeAttribute("currency");
+                }
+                if(labelType=="text"){
+                    oNode.setAttribute("type","text");
+                }else if(labelType=="percentage"){
+                    if(!oNode.hasAttribute("percentage")){
+                        oNode.setAttribute("percentage","true");
+                    }
+
+                    if($(oNode).next("var").text()!="%"){
+                        $(UE.plugins[thePlugins].editdom).after("<var>%</var>");
+                    }
+                }else{
+                    if($(oNode).next("var").text()=="%"){
+                        ($(oNode).next("var").remove());
+                    }
+                    oNode.removeAttribute("percentage");
+                    percentage = ""
+                }
+            }
+
+
+
+
+
+            if( gFontSize != '' ) {
+                oNode.style.fontSize = gFontSize+ 'px';
+                oNode.setAttribute('orgfontsize',gFontSize );
+            }else{
+                oNode.style.fontSize = '';
+                oNode.setAttribute('orgfontsize', '');
+            }
+            if( gWidth != '' ) {
+                oNode.style.width = gWidth+ 'px';
+                oNode.setAttribute('orgwidth',gWidth );
+            }else{
+                oNode.style.width = '';
+                oNode.setAttribute('orgwidth', '');
+            }
+            if( gHeight != '' ) {
+                oNode.style.height = gHeight+ 'px';
+                oNode.setAttribute('orgheight',gHeight );
+            }else{
+                oNode.style.height = '';
+                oNode.setAttribute('orgheight', '');
+            }
+            if(gValue !=''){
+                oNode.setAttribute('gValue',gValue);
+                $.ajax({
+                    type: "POST",
+                    url: "/formdesigner/dict/saveDefaultValue?id="+dataid ,
+                    data: {"defaultValue":gValue},
+                    dataType: 'json',
+                    success: function (data) {
+                        bootbox.alert("默认值修改成功");
+                    }
+                })
+            }
+            delete UE.plugins[thePlugins].editdom;
+        }
+    };
+</script>
+<!-- js end-->
+</body>
+</html>

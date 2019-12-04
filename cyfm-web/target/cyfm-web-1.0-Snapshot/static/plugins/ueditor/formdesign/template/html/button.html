@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>上传附件</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+
+    <link rel="stylesheet" href="main.style.css">
+    <link href="/static/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/select2/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/jquery-multi-select/css/multi-select.css"/>
+    <!-- BEGIN THEME STYLES -->
+    <link href="/static/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/static/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico"/>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/global/plugins/artDialog/css/ui-dialog.css">
+    <script type="text/javascript">
+
+        function createElement(type, name)
+        {
+            var element = null;
+            try {
+                element = document.createElement('<'+type+' name="'+name+'"  >');
+            } catch (e) {}
+            if(element==null) {
+                element = document.createElement(type);
+                element.name = name;
+            }
+            return element;
+        }
+    </script>
+</head>
+<body>
+<div class="content">
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th><span>控件名称</span></th>
+        </tr>
+        <tr>
+            <td>
+                <!--<input type="hidden" id="isChange" >-->
+                <!--<input type="hidden" id="dataType" >&lt;!&ndash;字段类型 &ndash;&gt;-->
+                <!--<input type="hidden" id="nullable">&lt;!&ndash;是否为空 &ndash;&gt;-->
+                <!--<input type="hidden" id="dataLength">&lt;!&ndash;字段长度&ndash;&gt;-->
+                <!--<input type="hidden" id="dataid">-->
+                <!--<select class="form-control input-medium select2me"  data-placeholder="请选择绑定存储" id="orgname" >-->
+
+                <!--</select>-->
+                <input type="text" id="gValue">
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script src="/static/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/static/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="/static/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script type="text/javascript" src="columnValidation.js"></script>
+<script src="/static/global/plugins/bootbox/bootbox.min.js"></script>
+<script src="/static/global/plugins/Math.uuid.js"></script>
+<script src="/static/global/plugins/artDialog/dialog-min.js"></script>
+<script type="text/javascript" src="../dialogs/internal.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+
+<script type="text/javascript">
+    var oNode = null,thePlugins = 'button';
+    window.onload = function() {
+        var gValue = null;
+        if( UE.plugins[thePlugins].editdom ){
+            oNode = UE.plugins[thePlugins].editdom;
+            gValue=oNode.getAttribute('gValue');
+//            $("#orgname").select2("val",gName);
+            $("#gValue").val(gValue);
+        }
+
+
+    }
+    dialog.oncancel = function () {
+        if( UE.plugins[thePlugins].editdom ) {
+            delete UE.plugins[thePlugins].editdom;
+        }
+    };
+
+
+    dialog.onok = function (){
+        if($("#gValue").val()==""){
+            alert("请填写按钮名称");
+            return false;
+        }
+        var gValue=$("#gValue").val();
+        if( !oNode ) {
+            oNode = createElement('input','none');
+            oNode.setAttribute('type','button');
+            oNode.setAttribute('plugins',thePlugins);
+            oNode.setAttribute('value',gValue);
+            if(!oNode.hasAttribute('customid')){
+                oNode.setAttribute('customid',Math.uuid());
+            }
+            editor.execCommand('insertHtml',oNode.outerHTML);
+
+
+        } else {
+            if(gValue!="" && gValue!=null){
+                oNode.setAttribute('value',gValue);
+            }
+            delete UE.plugins[thePlugins].editdom;
+        }
+    };
+</script>
+<!-- js end-->
+</body>
+</html>

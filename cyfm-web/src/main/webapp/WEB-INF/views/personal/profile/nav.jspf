@@ -1,0 +1,15 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<ul class="nav nav-tabs">
+    <li class="${action eq '个人资料' ? 'active' : ''}">
+        <a href="${ctx}/personal/profile">
+            <i class="fa fa-user"></i>
+            个人资料
+        </a>
+    </li>
+    <li class="${action eq '修改密码' ? 'active' : ''}">
+        <a href="${ctx}/personal/profile/changePassword">
+            <i class="fa fa-key"></i>
+            修改密码
+        </a>
+    </li>
+</ul>
