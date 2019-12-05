@@ -1,7 +1,7 @@
 # cyfm 快速开发框架
 
-## qq交流群 18692071
-~~<a href="http://123.207.221.254:8081/login" target="_blank">在线演示</a> 用户名：admin 密码：admin 暂时关闭在线演示~~
+## 微信交流群 yczj939705214
+~~<a href="http://ycbbs.vip:8080/cyfm-web/login" target="_blank">在线演示</a> 用户名：admin 密码：admin 暂时关闭在线演示~~
 
 ## 简介
 
