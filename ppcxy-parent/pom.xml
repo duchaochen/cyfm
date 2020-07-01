@@ -29,7 +29,7 @@
         <shiro.version>1.2.3</shiro.version>
         <cxf.version>2.7.11</cxf.version>
         <activemq.version>5.7.0</activemq.version>
-        <quartz.version>2.2.1</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
         <jedis.version>2.5.1</jedis.version>
         <ehcache.version>2.6.9</ehcache.version>
         <spymemcached.version>2.11.2</spymemcached.version>
