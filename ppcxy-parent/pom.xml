@@ -47,7 +47,7 @@
         <commons-compress.version>1.19</commons-compress.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <commons-codec.version>1.10</commons-codec.version>
-        <commons-io.version>2.4</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-beanutils.version>1.9.2</commons-beanutils.version>
         <guava.version>18.0</guava.version>
         <prettytime.version>3.2.3.Final</prettytime.version>
