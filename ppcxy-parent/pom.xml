@@ -22,7 +22,7 @@
         <spring-data-jpa.version>1.11.22.RELEASE</spring-data-jpa.version>
         <druid-version>1.1.10</druid-version>
         <jcaptcha.version>2.0-alpha-1</jcaptcha.version>
-        <jsoup.version>1.8.3</jsoup.version>
+        <jsoup.version>1.14.2</jsoup.version>
         <jhlabs.version>2.0.235</jhlabs.version>
         <tomcat-jdbc.version>7.0.54</tomcat-jdbc.version>
         <sitemesh.version>2.4.2</sitemesh.version>
