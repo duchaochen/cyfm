@@ -15,7 +15,7 @@
         <kotlin.version>RELEASE</kotlin.version>
         <springside.version>5.0.0-RC1</springside.version>
         <spring.version>4.3.20.RELEASE</spring.version>
-        <hibernate.version>4.3.5.Final</hibernate.version>
+        <hibernate.version>5.4.24.Final</hibernate.version>
         <mybatis.version>3.5.0</mybatis.version>
         <mybatis-spring.version>1.3.2</mybatis-spring.version>
         <mybatis.pagehalper.version>5.1.6</mybatis.pagehalper.version>
