@@ -14,7 +14,7 @@
         <ppcxy.version>1.0-Snapshot</ppcxy.version>
         <kotlin.version>RELEASE</kotlin.version>
         <springside.version>5.0.0-RC1</springside.version>
-        <spring.version>4.3.20.RELEASE</spring.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
         <hibernate.version>4.3.5.Final</hibernate.version>
         <mybatis.version>3.5.0</mybatis.version>
         <mybatis-spring.version>1.3.2</mybatis-spring.version>
